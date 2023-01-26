@@ -3,8 +3,23 @@ import Dexie, {Table, Collection} from "dexie";
 
 export interface Workspace
 {
-    key?: number
-    title: string
+    id?: number // isnt really usefull but whatever
+    workspaceEnabled?: boolean // for route redirection
+    config?: // workspace settings
+    {
+
+
+    }
+    inbox?: // main page of workspace where it shows inputs
+    [{
+
+
+    }]
+    today?: // today inputs
+    [{
+
+
+    }]
 
 }
 
@@ -18,10 +33,9 @@ class AppDb extends Dexie
 
         this.version(3).stores
         ({
-            workspace: 'as'
+            workspace: '++id'
 
         })
-        
         
     }
 

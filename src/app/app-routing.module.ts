@@ -1,9 +1,19 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { NgModule} from '@angular/core';
+import { RouterModule, Routes, Router } from '@angular/router';
+import { AppComponent } from './app.component';
+import { DatabaseService } from './db/database.service';
+import { LandingComponent } from './landing/landing.component';
+import { WorkspaceComponent } from './workspace Components/workspace/workspace.component';
+
 
 const routes: Routes = 
 [
-  // {path: 'workspace', component: WorkspaceComponent}
+  {path: '', component: LandingComponent},
+  {path: 'workspace', component: WorkspaceComponent, children:
+  [
+    // {} 
+
+  ]}
 
 ];
 
@@ -11,4 +21,8 @@ const routes: Routes =
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule 
+{
+
+
+}

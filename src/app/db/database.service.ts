@@ -13,11 +13,18 @@ export class DatabaseService
 
   async add()
   {
-    db.workspace.add
+    await db.workspace.add
     ({
-      title: 'ABC',
+      workspaceEnabled: false
 
     })
+
+  }
+
+  async update(id: number, project: any)
+  {
+    db.workspace.update(id, project)
+    console.log(id, project)
 
   }
 

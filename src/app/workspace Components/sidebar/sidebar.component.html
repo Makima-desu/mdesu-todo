@@ -1,0 +1,22 @@
+<div class="absolute min-w-[224px] h-screen font-mono">
+    <div class="bg-[#242424] w-full h-full">
+        <div class="h-full w-full overflow-hidden">
+            <!-- top of side bar -->
+            <div class="flex justify-between gap-4 items-center bg-[#262626] shadow px-3 py-2">
+                <!-- Hide/Show menu -->
+                <div class="w-6 text-white">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-5 h-5">
+                        <path fillRule="evenodd" d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10zm0 5.25a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75a.75.75 0 01-.75-.75z" clipRule="evenodd" />
+                    </svg>
+                </div>
+                <!-- close/open workspace settings -->
+                <div class="w-7 h-7 rounded-full bg-blue-50 items-center flex place-content-center place-items-center cursor-pointer">A</div>
+            </div>
+            <!-- inboxes -->
+            <ul class="gap-2 m-2 flex flex-col select-none text-gray-100">
+                <li class="p-2 hover:bg-[#eee]/20 rounded-lg transition-all duration-100">Inbox</li>
+                <li class="p-2 hover:bg-[#eee]/20 rounded-lg transition-all duration-100">{{dateNow | date: 'd'}}. Today</li>
+            </ul>
+        </div>
+    </div>
+</div>
