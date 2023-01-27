@@ -7,7 +7,14 @@ export interface Workspace
     workspaceEnabled?: boolean // for route redirection
     config?: // workspace settings
     {
+        theme?: // key/value for components
+        {
+            // sidebar
+            // content page
+            // text
+            //
 
+        }
 
     }
     inbox?: // main page of workspace where it shows inputs
@@ -16,6 +23,17 @@ export interface Workspace
 
     }]
     today?: // today inputs
+    [{
+        title?: string // title of the note
+        description?: string // description of the note
+        created?: string // date of creation of the note
+        due?: string // due date of the note
+        label?: string // label of the note
+        reminders?: string // reminders of the note i.e read it
+        priority?: string // priority, low, middle, high
+        repeat?: boolean
+    }]
+    completed?: // for storing completed tasks unless they are repetetive
     [{
 
 

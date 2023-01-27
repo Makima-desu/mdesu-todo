@@ -1,0 +1,20 @@
+<div class="text-white w-full md:mx-[15%]">
+    <div>
+        <h1 class="text-lg w-max">Today <span class="text-[12px] opacity-50">{{date | date: 'MMM dd EE, YYYY'}}</span><br><span class="text-[12px] opacity-50 flex w-full justify-center">{{date | date: 'hh:mm:ss a'}}</span></h1>
+    </div>
+    <!-- Page content -->
+    <div class="w-full mt-10">
+        <div *ngFor="let today of workspace.today" class="bg-[#282828] shadow border border-[#242424] rounded-lg px-4 py-2 w-56">
+            <div class="flex items-center gap-2 select-none">
+                <!-- Button for completing the task -->
+                <div class="w-4 h-4 ring rounded-full flex place-content-center group">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-3 opacity-0 group-hover:opacity-100 transition-all duration-150">
+                        <path fillRule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clipRule="evenodd" />
+                    </svg>
+                </div>
+                <h1 class="text-[14px]">{{today.title}}</h1>
+                <p>{{today.description}}</p>
+            </div>
+        </div>
+    </div>
+</div>

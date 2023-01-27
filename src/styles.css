@@ -5,6 +5,11 @@
 
 @layer base
 {
+    html
+    {
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+
+    }
     body
     {
         @apply bg-[#282828] overflow-hidden selection:bg-purple-800;

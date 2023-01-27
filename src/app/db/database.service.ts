@@ -15,7 +15,18 @@ export class DatabaseService
   {
     await db.workspace.add
     ({
-      workspaceEnabled: false
+      workspaceEnabled: false,
+      config:
+      {
+
+      },
+      today:
+      [{
+        title: 'To-Do',
+        description: '',
+        created: new Date().toLocaleDateString()
+
+      }],
 
     })
 
