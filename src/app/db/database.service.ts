@@ -24,7 +24,8 @@ export class DatabaseService
       [{
         title: 'To-Do',
         description: '',
-        created: new Date().toLocaleDateString()
+        created: new Date().toLocaleDateString(),
+        repeat: true,
 
       }],
 

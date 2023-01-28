@@ -32,6 +32,7 @@ export interface Workspace
         reminders?: string // reminders of the note i.e read it
         priority?: string // priority, low, middle, high
         repeat?: boolean
+        status?: boolean // false if not overdue, true if overdue 
     }]
     completed?: // for storing completed tasks unless they are repetetive
     [{

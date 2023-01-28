@@ -9,6 +9,7 @@ import { SidebarComponent } from './workspace Components/sidebar/sidebar.compone
 import { TodayComponent } from './workspace Components/today/today.component';
 import { TaskEditorComponent } from './workspace Components/task-editor/task-editor.component';
 import { WorkspaceSettingsComponent } from './workspace Components/workspace-settings/workspace-settings.component';
+import { AddTaskComponent } from './workspace Components/add-task/add-task.component';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { WorkspaceSettingsComponent } from './workspace Components/workspace-set
     TodayComponent,
     TaskEditorComponent,
     WorkspaceSettingsComponent,
+    AddTaskComponent,
   ],
   imports: [
     BrowserModule,

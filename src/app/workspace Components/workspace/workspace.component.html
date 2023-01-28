@@ -5,12 +5,13 @@
     // Projects
  -->
 
-<div class="flex">
+ <div class="flex">
+    <app-add-task *ngIf="componentsService.addTask" class="z-10"></app-add-task>
     <app-sidebar></app-sidebar>
-    <app-workspace-settings *ngIf="workspaceSettings"></app-workspace-settings>
-    <app-task-editor *ngIf="taskEditor"></app-task-editor>
+    <app-workspace-settings *ngIf="componentsService.workspaceSettings"></app-workspace-settings>
+    <app-task-editor *ngIf="componentsService.taskEditor"></app-task-editor>
     <!--  -->
-    <div class="p-4 w-full">
+    <div class="w-full h-screen overflow-y-auto">
         <router-outlet></router-outlet>
     </div>
 </div>

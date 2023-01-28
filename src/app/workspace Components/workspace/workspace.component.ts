@@ -9,11 +9,9 @@ import { LoadWorkspaceService } from 'src/app/services/Load Workspace/load-works
 export class WorkspaceComponent implements OnInit {
 
 
-  workspaceSettings: boolean = false
-  taskEditor: boolean = false
-
-  constructor(public workspace: LoadWorkspaceService, private componentsService: EnablingComponentsService) 
+  constructor(public workspace: LoadWorkspaceService, public componentsService: EnablingComponentsService) 
   {
+    
 
   }
 
