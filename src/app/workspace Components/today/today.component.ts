@@ -17,7 +17,7 @@ import { EnablingComponentsService } from 'src/app/services/components/enabling-
 export class TodayComponent implements OnInit {
 
 
-  constructor(private db: DatabaseService, public workspace: LoadWorkspaceService, public componentsService: EnablingComponentsService) 
+  constructor(private dbService: DatabaseService, public workspace: LoadWorkspaceService, public componentsService: EnablingComponentsService) 
   {
     
 

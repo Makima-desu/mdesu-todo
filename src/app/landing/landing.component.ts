@@ -35,7 +35,7 @@ export class LandingComponent implements OnInit {
     this.db.workspace.subscribe(item =>
       {
         item[0].workspaceEnabled = true
-        this.db.update(1, item[0])
+        this.db.update(item[0])
 
       })
 

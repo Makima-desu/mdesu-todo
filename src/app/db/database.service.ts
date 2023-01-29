@@ -33,10 +33,9 @@ export class DatabaseService
 
   }
 
-  async update(id: number, project: any)
+  async update(project: any)
   {
-    db.workspace.update(id, project)
-    console.log(id, project)
+    db.workspace.update(1, project)
 
   }
 

@@ -6,17 +6,14 @@ import { DatabaseService } from 'src/app/db/database.service';
 })
 export class LoadWorkspaceService {
 
-  config: any
-  today: any
+  db: any
 
-  constructor(private db: DatabaseService) 
+  constructor(private dbService: DatabaseService) 
   { 
     // get all the necessary information to show
-    this.db.workspace.subscribe(workspace =>
+    this.dbService.workspace.subscribe(workspace =>
       {
-        this.config = workspace[0] // change to .config
-        this.today = workspace[0].today // today inbox
-
+        this.db = workspace[0] // assign to db var, it will become workspace.db.whatever I need
 
       })
 

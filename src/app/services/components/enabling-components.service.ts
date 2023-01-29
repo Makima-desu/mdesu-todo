@@ -15,7 +15,7 @@ export class EnablingComponentsService {
 
   workspaceSettings: boolean = false // workspace settings component, hidden by default
   taskEditor: boolean = false // task editor component, hidden by default
-  addTask: boolean = true // adding task menu
+  addTask: boolean = false // adding task menu
   addTaskClicked: boolean = false // for checking if the add task button was clicked
 
   // function to check if add task button was clicked
