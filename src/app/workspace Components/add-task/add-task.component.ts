@@ -11,15 +11,20 @@ export class AddTaskComponent implements OnInit {
 
   constructor(private element: ElementRef, public componentsService: EnablingComponentsService, private workspace: LoadWorkspaceService, private dbService: DatabaseService) { }
 
-  selectedPriority: string = ''
-  priorityMenu: boolean = false
+  selectedPriority: string = '' // variable for which priority is currently selected, low medium high
+  priorityMenu: boolean = false // priority menu bool
+  datePicker: boolean = true // scheduler menu bool
 
   //@ts-ignore
-  @ViewChild('pmenu') pmenu: QueryList<ElementRef>
+  @ViewChild('pmenu') pmenu: QueryList<ElementRef> // priority menu element reference
   //@ts-ignore
-  @ViewChild('pmenuButton') pmenuButton: QueryList<ElementRef>
+  @ViewChild('pmenuButton') pmenuButton: QueryList<ElementRef> // priority menu button element reference
   //@ts-ignore
-  @ViewChild('addTaskMenu') addTaskMenu: QueryList<ElementRef>
+  @ViewChild('addTaskMenu') addTaskMenu: QueryList<ElementRef> //
+  //@ts-ignore
+  @ViewChild('datePicker') datePicker: QueryList<ElementRef>
+  //@ts-ignore
+  @ViewChild('datePickerButton') datePickerButton: QueryList<ElementRef>
 
   ngOnInit(): void 
   {
@@ -44,7 +49,13 @@ export class AddTaskComponent implements OnInit {
       this.priorityMenu = false
 
     }
+    //@ts-ignore
+    // close the date picker if it was clicked outside of it
+    if (this.element.nativeElement.contains(targetElement) && !this.datePickerButton.nativeElement.contains(targetElement) && !this.datePicker.nativeElement.contains(targetElement))
+    {
+      this.datePicker = false
 
+    }
   }
 
   // save task into database array
@@ -54,7 +65,9 @@ export class AddTaskComponent implements OnInit {
     ({
       title: title, // task name
       description: description, // task description
-      priority: priority // task priority
+      priority: priority, // task priority
+      created: new Date().toDateString(),
+
 
     })
     // this.dbService.update(this.workspace.db) // update the database

@@ -1,0 +1,20 @@
+<div class="flex flex-col text-white w-full p-4">
+    <div class="flex sticky top-4 items-center border-b border-[#363636] justify-between">
+        <h1 class="text-lg sm:w-max">Inbox <span class="text-[12px] opacity-50">{{date | date: 'MMM dd EE, YYYY'}}</span><span class="text-[12px] opacity-50 flex sm:w-full sm:justify-center">{{date | date: 'hh:mm:ss a'}}</span></h1>
+        <!-- adding task to the current inbox i.e if its today, it adds to today -->
+        <button #addTask (click)="componentsService.addTaskFunc(addTask)" class="select-none flex items-center text-[12px] drop-shadow p-1 rounded hover:bg-[#eee]/20 duration-200 transition-all">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6">
+                <path fillRule="evenodd" d="M12 5.25a.75.75 0 01.75.75v5.25H18a.75.75 0 010 1.5h-5.25V18a.75.75 0 01-1.5 0v-5.25H6a.75.75 0 010-1.5h5.25V6a.75.75 0 01.75-.75z" clipRule="evenodd" />
+            </svg>
+            Add Task
+        </button>
+    </div>
+    <!-- Page content -->
+    <div class="w-full flex flex-col mt-10">
+        <div *ngFor="let me of workspace.db.me.sections">
+            {{me.title}}
+            {{me.created}}
+            {{me.routines}}
+        </div>
+    </div>
+</div>

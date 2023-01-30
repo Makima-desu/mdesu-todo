@@ -3,17 +3,32 @@
         <div class="flex flex-col gap-1 border-b p-4 pb-0 relative">
             <span #taskTitle contenteditable="true" role="textbox" class="text-[16px] text-[#eee]/60 placeholder:text-[#eee]/70 overflow-hidden outline-none resize-none">Task Name</span>
             <div #taskDesc role="textbox" contenteditable="true" class="text-[14px] text-[#eee]/50 aria overflow-hidden resize-none outline-none">Description</div>
-            <div class="flex text-[14px] pb-4 mt-2">
+            <div class="flex text-[14px] pb-4 mt-2 gap-2">
+                <div #datePickerButton class="shadow">
+                    <button (click)="datePicker ? datePicker = false : datePicker = true; priorityMenu = false" class="px-1 border border-[#383838] shadow text-[#eee]/70 hover:bg-[#eee]/10 rounded-lg flex items-center">
+                        <span class=" p-1 flex items-center">Due date</span>
+                    </button>
+                </div>
                 <div #pmenuButton class="flex flex-col">
-                    <button class="px-1 border rounded-lg flex items-center">
+                    <button (click)="priorityMenu ? priorityMenu = false : priorityMenu = true; datePicker = false" class="px-1 border border-[#383838] hover:bg-[#eee]/10 rounded-lg flex items-center shadow">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" class="w-5 text-white">
                             <path strokeLinecap="round" strokeLinejoin="round" d="M3 3v1.5M3 21v-6m0 0l2.77-.693a9 9 0 016.208.682l.108.054a9 9 0 006.086.71l3.114-.732a48.524 48.524 0 01-.005-10.499l-3.11.732a9 9 0 01-6.085-.711l-.108-.054a9 9 0 00-6.208-.682L3 4.5M3 15V4.5" />
                         </svg>
-                        <span (click)="priorityMenu ? priorityMenu = false : priorityMenu = true" class="text-[#eee]/70 p-1 flex items-center">Priority:<div class="mx-2 rounded-full w-3 h-3 ring" [ngClass]="{'ring-green-300': selectedPriority === 'Low', 'ring-orange-300': selectedPriority === 'Medium', 'ring-red-700': selectedPriority === 'High'}"></div>{{selectedPriority}}</span>
+                        <span class="text-[#eee]/70 p-1 flex items-center">Priority:<div class="mx-2 rounded-full w-3 h-3 ring" [ngClass]="{'ring-green-300': selectedPriority === 'Low', 'ring-orange-300': selectedPriority === 'Medium', 'ring-red-700': selectedPriority === 'High'}"></div>{{selectedPriority}}</span>
                     </button>
                 </div>
             </div>
-            <div #pmenu *ngIf="priorityMenu" class="absolute flex flex-col text-white left-4 top-[109px] text-[14px] bg-[#242424] overflow-hidden border border-[#5b5b5b] shadow select-none">
+            <div #datePicker *ngIf="datePicker" class="absolute flex flex-col text w-[250px] h-96 bg-[#242424] shadow top-[109px] border border-[#383838]">
+                <div class="p-2 border-b border-[#363636] flex items-center">
+                    <input #dateInput placeholder="Type a due date" title="Sep 30 (year) 2pm/14:00" class="w-full bg-transparent outline-none text-[14px] placeholder:text-[#eee]/40 text-[#eee]/60">
+                    <div>
+                        <svg (click)="dateInput.value = ''" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" [ngClass]="{'w-5': dateInput.value !== ''}" class="text-[#eee]/60 cursor-pointer hover:text-[#eee] transition-all duration-100">
+                            <path d="M6.28 5.22a.75.75 0 00-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 101.06 1.06L10 11.06l3.72 3.72a.75.75 0 101.06-1.06L11.06 10l3.72-3.72a.75.75 0 00-1.06-1.06L10 8.94 6.28 5.22z" />
+                        </svg>
+                    </div>
+                </div>
+            </div>
+            <div #pmenu *ngIf="priorityMenu" class="absolute flex flex-col text-white left-[104px] top-[109px] text-[14px] bg-[#242424] overflow-hidden border border-[#383838] shadow select-none">
                 <span (click)="selectedPriority = 'Low'" class="px-6 py-1 cursor-pointer hover:bg-[#eee]/20 transition-all duration-150 flex gap-2 items-center"><div class="w-3 h-3 rounded-full ring ring-green-300"></div>Low</span>
                 <span (click)="selectedPriority = 'Medium'" class="px-6 py-1 cursor-pointer hover:bg-[#eee]/20 transition-all duration-150 flex gap-2 items-center"><div class="w-3 h-3 rounded-full ring ring-orange-300"></div>Medium</span>
                 <span (click)="selectedPriority = 'High'" class="px-6 py-1 cursor-pointer hover:bg-[#eee]/20 transition-all duration-150 flex gap-2 items-center"><div class="w-3 h-3 rounded-full ring ring-red-700"></div>High</span>

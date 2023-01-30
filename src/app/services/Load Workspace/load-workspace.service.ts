@@ -14,7 +14,6 @@ export class LoadWorkspaceService {
     this.dbService.workspace.subscribe(workspace =>
       {
         this.db = workspace[0] // assign to db var, it will become workspace.db.whatever I need
-
       })
 
   }

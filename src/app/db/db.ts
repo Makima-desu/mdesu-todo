@@ -17,28 +17,53 @@ export interface Workspace
         }
 
     }
-    inbox?: // main page of workspace where it shows inputs
+    sidebar?: // sidebar inbox array
     [{
+        title?: string // title of the project
+        sections?: // all the sections
+        [{
+            title?: string // title of section
+            tasks?: // tasks of that section
+            [{
+                title?: string // title of task
+                description?: string // description of task
+                created?: string // when task was created
+                priority?: string // what priority is that task
 
+            }]
+        }]
 
     }]
-    today?: // today inputs
-    [{
-        title?: string // title of the note
-        description?: string // description of the note
-        created?: string // date of creation of the note
-        due?: string // due date of the note
-        label?: string // label of the note
-        reminders?: string // reminders of the note i.e read it
-        priority?: string // priority, low, middle, high
-        repeat?: boolean
-        status?: boolean // false if not overdue, true if overdue 
-    }]
+    me?: // personal inbox of the user, cant be deleted
+    {
+        sections?: // store the sections of the inbox
+        [{
+            title?: string // title of the section
+            routines?: boolean // if enabled, the tasks will repeat every time the user sets them too
+            tasks?: // tasks array belonging to the section
+            [{
+                title?: string // title of the task
+                description?: string // description of the task
+                created?: string // when was the task created
+
+            }]
+            created?: string // when was the section created
+        }]
+
+    }
     completed?: // for storing completed tasks unless they are repetetive
-    [{
+    {
+        count?: number // for tracking how many were completed
+        tasks?: // store all comlpeted tasks
+        [{
+            title?: string // title of task
+            description?: string // description of task
+            created?: string // when task was created
+            priority?: string // what priority is that task
 
+        }]
 
-    }]
+    }
 
 }
 

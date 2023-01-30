@@ -16,19 +16,40 @@ export class DatabaseService
     await db.workspace.add
     ({
       workspaceEnabled: false,
-      config:
+      config: // initialize workspace config
       {
 
       },
-      today:
-      [{
-        title: 'To-Do',
-        description: '',
-        created: new Date().toLocaleDateString(),
-        repeat: true,
+      sidebar: [{title: 'remove'}], // create sidebar in database
+      completed: 
+      {
+        count: 0,
+        tasks:
+        [{
+          title: 'remove'
 
-      }],
+        }]
+        
 
+      },
+      me:
+      {
+        sections:
+        [{
+          title: 'Routines',
+          routines: true,
+          tasks:
+          [{
+            title: 'Create Your Routine!',
+            description: '',
+            created: new Date().toDateString()
+
+          }],
+          created: new Date().toDateString()          
+
+        }]
+
+      }
     })
 
   }

@@ -17,6 +17,7 @@ export class EnablingComponentsService {
   taskEditor: boolean = false // task editor component, hidden by default
   addTask: boolean = false // adding task menu
   addTaskClicked: boolean = false // for checking if the add task button was clicked
+  addInbox: boolean = false // adding an inbox to sidebar
 
   // function to check if add task button was clicked
   addTaskFunc(element: any)

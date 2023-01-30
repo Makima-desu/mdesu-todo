@@ -19,7 +19,7 @@ export class LandingComponent implements OnInit {
       {
         if (item[0].workspaceEnabled && this.router.url === '/')
         {
-          this.router.navigate(['/workspace/today'])
+          this.router.navigate(['/workspace/me'])
 
         }
 

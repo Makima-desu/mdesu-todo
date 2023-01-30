@@ -6,10 +6,11 @@ import { AppComponent } from './app.component';
 import { WorkspaceComponent } from './workspace Components/workspace/workspace.component';
 import { LandingComponent } from './landing/landing.component';
 import { SidebarComponent } from './workspace Components/sidebar/sidebar.component';
-import { TodayComponent } from './workspace Components/today/today.component';
 import { TaskEditorComponent } from './workspace Components/task-editor/task-editor.component';
 import { WorkspaceSettingsComponent } from './workspace Components/workspace-settings/workspace-settings.component';
 import { AddTaskComponent } from './workspace Components/add-task/add-task.component';
+import { MeComponent } from './workspace Components/me/me.component';
+import { AddInboxSidebarComponent } from './workspace Components/add-inbox-sidebar/add-inbox-sidebar.component';
 
 @NgModule({
   declarations: [
@@ -17,10 +18,11 @@ import { AddTaskComponent } from './workspace Components/add-task/add-task.compo
     WorkspaceComponent,
     LandingComponent,
     SidebarComponent,
-    TodayComponent,
     TaskEditorComponent,
     WorkspaceSettingsComponent,
     AddTaskComponent,
+    MeComponent,
+    AddInboxSidebarComponent,
   ],
   imports: [
     BrowserModule,
