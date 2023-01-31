@@ -1,1 +1,21 @@
-<h1>task editor</h1>
+<div class="absolute w-screen h-full flex justify-center p-8 bg-black/50 z-10">
+    <div #editor class="relative w-[40rem] h-full overflow-x-hidden overflow-y-auto bg-[#242424] shadow border border-[#303030] rounded-lg z-10">
+        <div class="items-center flex justify-between pt-4 pl-4 pr-2 text-[#eee]/80 pb-4 border-b border-[#383838]">
+            <span class="text-[13px]">{{task.section}}</span>
+            <svg (click)="components.taskEditor = false" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" class="w-6 cursor-pointer transition-all duration-200 hover:bg-[#eee]/20 rounded">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+        </div>
+        <div class="flex flex-col gap-8 border-b-2 border-[#383838] pt-4 px-6 pb-4 border-l">
+            <div class="flex flex-col border-l border-[#383838] pl-4 gap-1">
+                <span spellcheck="false" contenteditable="true" class="text-[#eee]/70 text-base outline-none">{{task.title}}</span>
+                <span spellcheck="false" contenteditable="true" class="text-[#eee]/50 text-[12px] outline-none">{{task.description}}</span>
+            </div>
+            <div class="flex flex-col gap-2">
+                <span class="text-[#eee]/50 text-[12px] p-1 w-fit outline-none border rounded-lg border-[#383838]">Created: {{task.created}}</span>
+                <span [ngClass]="{'border-green-300': task.priority === 'Low', 'border-orange-300': task.priority === 'Medium', 'border-red-700': task.priority === 'High'}" class="text-[#eee]/50 text-[12px] p-1 w-fit outline-none border rounded-lg border-[#383838]">Priority: {{task.priority}}</span>
+                <span class="text-[#eee]/50 text-[12px] p-1 w-fit outline-none border rounded-lg border-[#383838]">Due: {{task.due}}</span>
+            </div>
+        </div>
+    </div>
+</div>

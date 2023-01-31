@@ -10,14 +10,15 @@ import {timer} from 'rxjs'
 })
 export class MeComponent implements OnInit {
 
-  constructor(public workspace: LoadWorkspaceService, public componentsService: EnablingComponentsService) { }
+  constructor(public workspace: LoadWorkspaceService, public components: EnablingComponentsService) { }
 
   date: any = new Date() // todays date
   // @ts-ignore
-  @ViewChild('tasks') tasks: QueryList<ElementRef>
+  @ViewChild('tasks') tasks: QueryList<ElementRef> // tasks section for scrollbar tracking
 
   ngOnInit(): void 
   {
+
     // utilize this function to check if certain tasks are overdue
     // currently it updates the clock
     timer(0, 1000).subscribe(() =>
@@ -25,16 +26,6 @@ export class MeComponent implements OnInit {
       this.date = new Date()
 
     })
-  }
-
-  onScroll()
-  {
-    if ((this.tasks.nativeElement.offsetHeight + this.tasks.nativeElement.scrollTop) >= this.tasks.nativeElement.scrollHeight)
-    {
-      console.log('ITS LIST BOR')
-
-    }
-
   }
 
 }

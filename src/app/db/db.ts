@@ -19,8 +19,8 @@ export interface Workspace
     }
     sidebar?: // sidebar inbox array
     [{
-        title?: string // title of the project
-        sections?: // all the sections
+        title?: string // title of the group
+        sections?: // all the sections of that group
         [{
             title?: string // title of section
             tasks?: // tasks of that section

@@ -34,8 +34,12 @@ export class SidebarComponent implements OnInit {
 
   ngOnInit(): void 
   {
+    if (window.innerWidth < 640)
+    {
+      this.sidebar = false
 
-   
+    }
+    else this.sidebar = true
 
   }
 

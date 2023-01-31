@@ -13,7 +13,8 @@ export class AddTaskComponent implements OnInit {
 
   selectedPriority: string = '' // variable for which priority is currently selected, low medium high
   priorityMenu: boolean = false // priority menu bool
-  datePicker: boolean = false // scheduler menu bool
+  datePickerMenu: boolean = false // scheduler menu bool
+  schedulerDateInput: string = '' // get the input to save when task is added
 
   //@ts-ignore
   @ViewChild('pmenu') pmenu: QueryList<ElementRef> // priority menu element reference
@@ -22,7 +23,7 @@ export class AddTaskComponent implements OnInit {
   //@ts-ignore
   @ViewChild('addTaskMenu') addTaskMenu: QueryList<ElementRef> //
   //@ts-ignore
-  @ViewChild('datePicker') datePicker: QueryList<ElementRef>
+  @ViewChild('scheduler') scheduler: QueryList<ElementRef>
   //@ts-ignore
   @ViewChild('datePickerButton') datePickerButton: QueryList<ElementRef>
 
@@ -51,27 +52,29 @@ export class AddTaskComponent implements OnInit {
     }
     //@ts-ignore
     // close the date picker if it was clicked outside of it
-    if (this.element.nativeElement.contains(targetElement) && !this.datePickerButton.nativeElement.contains(targetElement) && !this.datePicker.nativeElement.contains(targetElement))
+    if (this.element.nativeElement.contains(targetElement) && !this.datePickerButton.nativeElement.contains(targetElement) && !this.scheduler.nativeElement.contains(targetElement))
     {
-      this.datePicker = false
+      this.datePickerMenu = false
 
     }
   }
 
   // save task into database array
-  saveTask(title: string, description: string, priority: string)
+  saveTask(title: string, description: string, priority: string, due: string)
   {
+    if (priority === '') {priority = 'None'}
+    if (due === '') {due = 'Not due'}
     this.workspace.db.me.sections[0].tasks.push
     ({
       title: 'Very long title name right here i hope there is enough characters to display', // task name
       description: 'Very long title name right here i hope there is enough characters to display and dsecipriton so here ti goes aisdnas lkdjas;d jkas;d jas;d', // task description
       priority: priority, // task priority
       created: new Date().toDateString(),
-
-
+      due: due,
+      
     })
     this.dbService.update(this.workspace.db) // update the database
-    // this.componentsService.addTask = false
+    this.componentsService.addTask = false
 
   }
 
