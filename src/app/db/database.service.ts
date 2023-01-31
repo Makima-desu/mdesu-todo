@@ -23,7 +23,6 @@ export class DatabaseService
       sidebar: [{title: 'remove'}], // create sidebar in database
       completed: 
       {
-        count: 0,
         tasks:
         [{
           title: 'remove'

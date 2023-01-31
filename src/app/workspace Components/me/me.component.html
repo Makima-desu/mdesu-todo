@@ -1,4 +1,4 @@
-<div class="flex flex-col text-white w-full p-4">
+<div class="flex flex-col p-4 text-white w-full h-full relative">
     <div class="flex sticky top-4 items-center border-b border-[#363636] justify-between">
         <h1 class="text-lg sm:w-max">Inbox <span class="text-[12px] opacity-50">{{date | date: 'MMM dd EE, YYYY'}}</span><span class="text-[12px] opacity-50 flex sm:w-full sm:justify-center">{{date | date: 'hh:mm:ss a'}}</span></h1>
         <!-- adding task to the current inbox i.e if its today, it adds to today -->
@@ -10,11 +10,30 @@
         </button>
     </div>
     <!-- Page content -->
-    <div class="w-full flex flex-col mt-10">
-        <div *ngFor="let me of workspace.db.me.sections">
-            {{me.title}}
-            {{me.created}}
-            {{me.routines}}
+    <div class="w-full flex flex-col p-8 h-[90%]">
+        <div *ngFor="let me of workspace.db.me.sections; let index = index" class="w-72 h-full rounded-lg relative">
+            <div [ngClass]="{'border-opacity-100': tasks.scrollTop > 0}" class="flex items-center border-opacity-0 gap-2 border-b-2 border-[#484848] pb-2">
+                <span class="text-[16px] text-[#eee]/80 w-full">{{me.title}} <span class="text-[12px] text-[#eee]/40">{{workspace.db.me.sections.length}}</span></span>
+                <!-- shift index left -->
+                <svg *ngIf="index > 0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5">
+                    <path fillRule="evenodd" d="M17 10a.75.75 0 01-.75.75H5.612l4.158 3.96a.75.75 0 11-1.04 1.08l-5.5-5.25a.75.75 0 010-1.08l5.5-5.25a.75.75 0 111.04 1.08L5.612 9.25H16.25A.75.75 0 0117 10z" clipRule="evenodd" />
+                </svg>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-6">
+                    <path d="M3 10a1.5 1.5 0 113 0 1.5 1.5 0 01-3 0zM8.5 10a1.5 1.5 0 113 0 1.5 1.5 0 01-3 0zM15.5 8.5a1.5 1.5 0 100 3 1.5 1.5 0 000-3z" />
+                </svg>
+                <!-- shift index right -->
+                <svg *ngIf="index === workspace.db.me.sections.length" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5">
+                    <path fillRule="evenodd" d="M3 10a.75.75 0 01.75-.75h10.638L10.23 5.29a.75.75 0 111.04-1.08l5.5 5.25a.75.75 0 010 1.08l-5.5 5.25a.75.75 0 11-1.04-1.08l4.158-3.96H3.75A.75.75 0 013 10z" clipRule="evenodd" />
+                </svg>
+            </div>
+            <div [ngClass]="{'border-opacity-0': (tasks.offsetHeight + tasks.scrollTop) >= tasks.scrollHeight}" #tasks class="overflow-y-auto h-full gap-2 flex flex-col pr-3 border-b-2 border-[#484848] scrollbar-thin scrollbar-thumb-slate-400 scrollbar-track-slate-700 scrollbar-thumb-rounded scrollbar-track-rounded">
+                <div *ngFor="let task of me.tasks" class="shadow bg-[#242424] p-2 rounded-lg border border-[#3d3d3d]">
+                    <div class="flex flex-col gap-1">
+                        <span class="text-[14px] text-[#eee]/70">{{task.title}}</span>
+                        <span class="text-[12px] text-[#eee]/40">{{task.description}}</span>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>

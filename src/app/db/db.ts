@@ -53,7 +53,6 @@ export interface Workspace
     }
     completed?: // for storing completed tasks unless they are repetetive
     {
-        count?: number // for tracking how many were completed
         tasks?: // store all comlpeted tasks
         [{
             title?: string // title of task

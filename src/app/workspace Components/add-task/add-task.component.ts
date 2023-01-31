@@ -13,7 +13,7 @@ export class AddTaskComponent implements OnInit {
 
   selectedPriority: string = '' // variable for which priority is currently selected, low medium high
   priorityMenu: boolean = false // priority menu bool
-  datePicker: boolean = true // scheduler menu bool
+  datePicker: boolean = false // scheduler menu bool
 
   //@ts-ignore
   @ViewChild('pmenu') pmenu: QueryList<ElementRef> // priority menu element reference
@@ -61,7 +61,7 @@ export class AddTaskComponent implements OnInit {
   // save task into database array
   saveTask(title: string, description: string, priority: string)
   {
-    this.workspace.db.today.push
+    this.workspace.db.me.sections[0].tasks.push
     ({
       title: title, // task name
       description: description, // task description
@@ -70,8 +70,8 @@ export class AddTaskComponent implements OnInit {
 
 
     })
-    // this.dbService.update(this.workspace.db) // update the database
-    this.componentsService.addTask = false
+    this.dbService.update(this.workspace.db) // update the database
+    // this.componentsService.addTask = false
 
   }
 
