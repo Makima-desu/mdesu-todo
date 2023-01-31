@@ -45,6 +45,7 @@ export interface Workspace
                 title?: string // title of the task
                 description?: string // description of the task
                 created?: string // when was the task created
+                priority?: string // task priortiy
 
             }]
             created?: string // when was the section created

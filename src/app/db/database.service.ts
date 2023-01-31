@@ -41,7 +41,8 @@ export class DatabaseService
           [{
             title: 'Create Your Routine!',
             description: '',
-            created: new Date().toDateString()
+            created: new Date().toDateString(),
+            priority: ''
 
           }],
           created: new Date().toDateString()          

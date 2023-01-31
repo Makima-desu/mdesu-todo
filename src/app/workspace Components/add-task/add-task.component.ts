@@ -63,8 +63,8 @@ export class AddTaskComponent implements OnInit {
   {
     this.workspace.db.me.sections[0].tasks.push
     ({
-      title: title, // task name
-      description: description, // task description
+      title: 'Very long title name right here i hope there is enough characters to display', // task name
+      description: 'Very long title name right here i hope there is enough characters to display and dsecipriton so here ti goes aisdnas lkdjas;d jkas;d jas;d', // task description
       priority: priority, // task priority
       created: new Date().toDateString(),
 
