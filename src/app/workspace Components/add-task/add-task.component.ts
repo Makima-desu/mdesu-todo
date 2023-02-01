@@ -9,7 +9,7 @@ import { LoadWorkspaceService } from 'src/app/services/Load Workspace/load-works
 })
 export class AddTaskComponent implements OnInit {
 
-  constructor(private element: ElementRef, public componentsService: EnablingComponentsService, private workspace: LoadWorkspaceService, private dbService: DatabaseService) { }
+  constructor(private element: ElementRef, public components: EnablingComponentsService, private workspace: LoadWorkspaceService, private dbService: DatabaseService) { }
 
   selectedPriority: string = '' // variable for which priority is currently selected, low medium high
   priorityMenu: boolean = false // priority menu bool
@@ -38,9 +38,9 @@ export class AddTaskComponent implements OnInit {
   {
     // if the click happend outside of element and the add task button was not clicked, hide the menu
     //@ts-ignore
-    if (!this.addTaskMenu.nativeElement.contains(targetElement) && this.componentsService.addTaskClicked === false)
+    if (!this.addTaskMenu.nativeElement.contains(targetElement) && this.components.addTaskClicked === false)
     {
-      this.componentsService.addTask = false
+      this.components.addTask = false
 
     }
     // @ts-ignore
@@ -64,17 +64,17 @@ export class AddTaskComponent implements OnInit {
   {
     if (priority === '') {priority = 'None'}
     if (due === '') {due = 'Not due'}
-    this.workspace.db.me.sections[0].tasks.push
+    this.workspace.db.me.sections[this.components.index].tasks.push
     ({
       title: 'Very long title name right here i hope there is enough characters to display', // task name
       description: 'Very long title name right here i hope there is enough characters to display and dsecipriton so here ti goes aisdnas lkdjas;d jkas;d jas;d', // task description
       priority: priority, // task priority
       created: new Date().toDateString(),
       due: due,
-      
+
     })
-    this.dbService.update(this.workspace.db) // update the database
-    this.componentsService.addTask = false
+    // this.dbService.update(this.workspace.db) // update the database
+    this.components.addTask = false
 
   }
 

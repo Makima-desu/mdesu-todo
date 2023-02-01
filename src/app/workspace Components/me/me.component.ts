@@ -28,4 +28,18 @@ export class MeComponent implements OnInit {
     })
   }
 
+  // function to add a section to Me inbox
+  addSection()
+  {
+    this.workspace.db.me.sections.push
+    ({
+      title: 'Section',
+      tasks: [{}]
+
+    })
+    // splice the task at index 0 so there isnt an empty task
+    this.workspace.db.me.sections[this.workspace.db.me.sections.length - 1].tasks.splice(0)
+
+  }
+
 }

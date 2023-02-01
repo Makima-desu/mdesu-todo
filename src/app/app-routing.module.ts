@@ -13,6 +13,7 @@ const routes: Routes =
   {path: 'workspace', component: WorkspaceComponent, children:
   [
     {path: 'me', component: MeComponent} 
+    // {path: ':workspace', component: Inbox}
 
   ]}
 

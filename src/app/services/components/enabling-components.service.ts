@@ -29,6 +29,8 @@ export class EnablingComponentsService {
   taskEditor: boolean = true // task editor component, hidden by default
   taskClicked: boolean = false
 
+  index: number = -1
+
   addInbox: boolean = false // adding an inbox to sidebar
   
   addTask: boolean = false // adding task menu
@@ -47,13 +49,14 @@ export class EnablingComponentsService {
   }
 
   // function to check if add task button was clicked
-  addTaskFunc(element: any)
+  addTaskFunc(element: any, index: number)
   {
     // if yes
     if (element)
     {
       this.addTaskClicked = true // change the click to true
       this.addTask = true // show the menu
+      this.index = index
       this.sleep(100).then(() => this.addTaskClicked = false)
       // sleep here is neccessary because the only way to check if the click
       // happend outside is to check the entire document
