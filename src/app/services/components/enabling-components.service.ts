@@ -26,14 +26,14 @@ export class EnablingComponentsService {
   workspaceSettings: boolean = false // workspace settings component, hidden by default
   
   taskInfo: TaskInfo = {} // for passing task information
-  taskEditor: boolean = true // task editor component, hidden by default
+  taskEditor: boolean = false // task editor component, hidden by default
   taskClicked: boolean = false
 
   index: number = -1
 
   addInbox: boolean = false // adding an inbox to sidebar
   
-  addTask: boolean = false // adding task menu
+  addTask: boolean = true // adding task menu
   addTaskClicked: boolean = false // for checking if the add task button was clicked
 
   addTaskEditor(element: any)

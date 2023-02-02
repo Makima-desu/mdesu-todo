@@ -16,16 +16,33 @@
                 <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
             </svg>
         </div>
-        <div class="h-[85%]">
+        <div class="h-[95%] relative">
             <!-- inboxes -->
-            <ul class="gap-2 flex flex-col select-none text-gray-100 text-sm mt-2">
-                <li routerLink="me" routerLinkActive="bg-[#eee]/20" [routerLinkActiveOptions]="{exact: true}" class="p-1 cursor-pointer flex items-center pl-2 mx-2 hover:bg-[#eee]/20 rounded-lg transition-all duration-100"><span class="">Me</span><span class="text-[#eee]/50 text-[12px] flex justify-end w-full">{{dateNow | date: 'EE, d'}}</span></li>
-                <li routerLink="completed" routerLinkActive="bg-[#eee]/20" [routerLinkActiveOptions]="{exact: true}" class="p-1 cursor-pointer flex items-center pl-2 mx-2 hover:bg-[#eee]/20 rounded-lg transition-all duration-100">Completed <span class="text-[#eee]/50 text-[12px] flex justify-end w-full">{{workspace.db.completed.tasks.length}}</span></li>
+            <ul class="relative gap-2 flex flex-col select-none text-gray-100 text-sm mt-2">
+                <li routerLink="me" routerLinkActive="bg-[#eee]/20" [routerLinkActiveOptions]="{exact: true}" class="p-1 cursor-pointer flex items-center pl-2 mx-2 hover:bg-[#eee]/20 rounded-lg transition-all duration-100"><span class="flex items-center gap-2">Me <span class="text-[#eee]/50 text-[12px]">{{workspace.db.me.sections.length}}</span></span><span class="text-[#eee]/50 text-[12px] flex justify-end w-full">{{dateNow | date: 'MMM, d'}}</span></li>
             </ul>
-            <!-- overflow y enabled -->
-            <ul class="h-full w-full mt-2 overflow-y-auto gap-2 flex flex-col select-none text-gray-100 text-sm scrollbar-thin scrollbar-thumb-slate-400 scrollbar-track-slate-700 scrollbar-thumb-rounded scrollbar-track-rounded">
-                <li *ngFor="let inbox of workspace.db.sidebar" [routerLink]="inbox.title" routerLinkActive="bg-[#eee]/20" [routerLinkActiveOptions]="{exact: true}" class="p-1 cursor-pointer flex items-center pl-2 mx-2 hover:bg-[#eee]/20 rounded-lg transition-all duration-100">{{inbox.title}}</li>
-            </ul>
+            <div class="absolute h-full w-full">
+                <div class="h-[90%] border-b-2 border-[#3d3d3d] w-full mt-2 overflow-y-auto scrollbar-thin scrollbar-thumb-slate-400 scrollbar-track-slate-700 scrollbar-thumb-rounded scrollbar-track-rounded">
+                    <!-- overflow y enabled -->
+                    <ul class="gap-2 flex flex-col select-none text-gray-100 text-sm scrollbar-thin scrollbar-thumb-slate-400 scrollbar-track-slate-700 scrollbar-thumb-rounded scrollbar-track-rounded">
+                        <li *ngFor="let inbox of workspace.db.sidebar" [routerLink]="inbox.title" routerLinkActive="bg-[#eee]/20" [routerLinkActiveOptions]="{exact: true}" class="p-1 cursor-pointer flex items-center pl-2 mx-2 hover:bg-[#eee]/20 rounded-lg transition-all duration-100">{{inbox.title}}</li>
+                    </ul>
+                </div>
+                <ul class="bg-[#262626] pt-2 shadow w-full gap-2 flex flex-col select-none text-gray-100 text-sm">
+                    <li routerLink="completed" routerLinkActive="bg-[#eee]/20" [routerLinkActiveOptions]="{exact: true}" class="p-1 gap-1 cursor-pointer flex items-center pl-2 mx-2 hover:bg-[#eee]/20 rounded-lg transition-all duration-100">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" class="w-8">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+                        </svg>
+                        Completed 
+                        <span class="text-[#eee]/50 text-[12px] flex justify-end w-full">{{workspace.db.completed.tasks.length}}</span></li>
+                    <li routerLink="deleted" routerLinkActive="bg-[#eee]/20" [routerLinkActiveOptions]="{exact: true}" class="p-1 gap-1 cursor-pointer flex items-center pl-2 mx-2 hover:bg-[#eee]/20 rounded-lg transition-all duration-100">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" class="w-8">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+                        </svg>
+                        Deleted 
+                        <span class="text-[#eee]/50 text-[12px] flex justify-end w-full">{{workspace.db.completed.tasks.length}}</span></li>
+                </ul>
+            </div>
         </div>
     </div>
 </div>

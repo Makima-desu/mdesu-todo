@@ -11,7 +11,7 @@ import { WorkspaceSettingsComponent } from './workspace Components/workspace-set
 import { AddTaskComponent } from './workspace Components/add-task/add-task.component';
 import { MeComponent } from './workspace Components/me/me.component';
 import { AddInboxSidebarComponent } from './workspace Components/add-inbox-sidebar/add-inbox-sidebar.component';
-import { TruncatePipe } from './truncate.pipe';
+import { TruncatePipe } from './pipes/truncate/truncate.pipe';
 
 @NgModule({
   declarations: [

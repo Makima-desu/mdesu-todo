@@ -59,6 +59,13 @@ export class AddTaskComponent implements OnInit {
     }
   }
 
+  placeholder(element: any)
+  {
+    if (element.innerText === 'Task name') element.innerText = ''
+    if (element.innerText === 'Description') element.innerText = ''
+
+  }
+
   // save task into database array
   saveTask(title: string, description: string, priority: string, due: string)
   {
@@ -66,14 +73,14 @@ export class AddTaskComponent implements OnInit {
     if (due === '') {due = 'Not due'}
     this.workspace.db.me.sections[this.components.index].tasks.push
     ({
-      title: 'Very long title name right here i hope there is enough characters to display', // task name
-      description: 'Very long title name right here i hope there is enough characters to display and dsecipriton so here ti goes aisdnas lkdjas;d jkas;d jas;d', // task description
+      title: title, // task name
+      description: description, // task description
       priority: priority, // task priority
       created: new Date().toDateString(),
       due: due,
 
     })
-    // this.dbService.update(this.workspace.db) // update the database
+    this.dbService.update(this.workspace.db) // update the database
     this.components.addTask = false
 
   }
