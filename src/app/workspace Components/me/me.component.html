@@ -16,15 +16,15 @@
                 <div [ngClass]="{'border-opacity-0': tasks.scrollTop === 0}" class="flex items-center border-b-2 gap-2 border-[#484848] pb-2">
                     <span class="text-[16px] text-[#eee]/80 w-full">{{me.title}} <span class="text-[12px] text-[#eee]/40">{{workspace.db.me.sections[index].tasks.length}}</span></span>
                     <!-- Add task to section -->
-                    <svg #addTask (click)="components.addTaskFunc(addTask, index)" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 cursor-pointer transition-all duration-200 hover:bg-[#eee]/30 rounded">
+                    <svg #addTask (click)="components.addTaskFunc(addTask, index)" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-6 cursor-pointer transition-all duration-200 hover:bg-[#eee]/30 rounded">
                         <path d="M10.75 4.75a.75.75 0 00-1.5 0v4.5h-4.5a.75.75 0 000 1.5h4.5v4.5a.75.75 0 001.5 0v-4.5h4.5a.75.75 0 000-1.5h-4.5v-4.5z" />
                     </svg>
                     <!-- shift index left -->
-                    <svg (click)="shiftLeft(index)" *ngIf="index > 0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 cursor-pointer transition-all duration-200 hover:bg-[#eee]/30 rounded">
+                    <svg (click)="shiftLeft(index)" *ngIf="index > 0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-6 cursor-pointer transition-all duration-200 hover:bg-[#eee]/30 rounded">
                         <path fillRule="evenodd" d="M17 10a.75.75 0 01-.75.75H5.612l4.158 3.96a.75.75 0 11-1.04 1.08l-5.5-5.25a.75.75 0 010-1.08l5.5-5.25a.75.75 0 111.04 1.08L5.612 9.25H16.25A.75.75 0 0117 10z" clipRule="evenodd" />
                     </svg>
                     <!-- shift index right -->
-                    <svg (click)="shiftRight(index)" *ngIf="index !== workspace.db.me.sections.length - 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 cursor-pointer transition-all duration-200 hover:bg-[#eee]/30 rounded">
+                    <svg (click)="shiftRight(index)" *ngIf="index !== workspace.db.me.sections.length - 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-6 cursor-pointer transition-all duration-200 hover:bg-[#eee]/30 rounded">
                         <path fillRule="evenodd" d="M3 10a.75.75 0 01.75-.75h10.638L10.23 5.29a.75.75 0 111.04-1.08l5.5 5.25a.75.75 0 010 1.08l-5.5 5.25a.75.75 0 11-1.04-1.08l4.158-3.96H3.75A.75.75 0 013 10z" clipRule="evenodd" />
                     </svg>
                     <!-- section settings -->
@@ -33,7 +33,7 @@
                     </svg>
                 </div>
                 <div #tasks [ngClass]="{'border-opacity-0': (tasks.offsetHeight + tasks.scrollTop) >= tasks.scrollHeight}" class="overflow-y-auto h-full gap-4 flex flex-col pr-3 border-b-2 border-[#484848] scrollbar-thin group-hover:scrollbar-thumb-slate-100 group-hover:scrollbar-track-slate-900 scrollbar-thumb-rounded scrollbar-track-rounded pl-2">
-                    <div #task [ngClass]="{'border-green-300 hover:border-green-600': task.priority === 'Low', 'border-orange-300 hover:border-orange-600': task.priority === 'Medium', 'border-red-700 hover:border-red-900': task.priority === 'High', 'border-[#3d3d3d] hover:border-[#585858]': task.priority === 'None'}" (click)="components.loadTaskInfo(task.title, task.description, task.priority, task.created, task.due, me.title); components.addTaskEditor(task)" *ngFor="let task of me.tasks" class="flex gap-2 select-none cursor-pointer transition-all duration-200 bg-[#242424] p-2 shadow-lg rounded-lg border">
+                    <div #task [ngClass]="{'border-green-300 hover:border-green-600': task.priority === 'Low', 'border-orange-300 hover:border-orange-600': task.priority === 'Medium', 'border-red-700 hover:border-red-900': task.priority === 'High', 'border-[#3d3d3d] hover:border-[#585858]': task.priority === 'None'}" (click)="components.loadTaskInfo(task.title, task.description, task.priority, task.created, task.due, me.title, index, taskIndex); components.addTaskEditor(task)" *ngFor="let task of me.tasks; let taskIndex = index" class="flex gap-2 select-none cursor-pointer transition-all duration-200 bg-[#242424] p-2 shadow-lg rounded-lg border">
                         <div class="flex flex-col gap-1 w-full overflow-hidden">
                             <span class="text-[14px] text-[#eee]/70 overflow-hidden">{{task.title | truncate: 34}}</span>
                             <span class="text-[12px] text-[#eee]/40">{{task.description}}</span>

@@ -1,5 +1,7 @@
 import { Component, OnInit, HostListener, ElementRef, QueryList, ViewChild, Query} from '@angular/core';
+import { DatabaseService } from 'src/app/db/database.service';
 import { EnablingComponentsService } from 'src/app/services/components/enabling-components.service';
+import { LoadWorkspaceService } from 'src/app/services/Load Workspace/load-workspace.service';
 
 @Component({
   selector: 'app-task-editor',
@@ -7,12 +9,15 @@ import { EnablingComponentsService } from 'src/app/services/components/enabling-
 })
 export class TaskEditorComponent implements OnInit {
 
-  constructor(public components: EnablingComponentsService, private element: ElementRef) { }
+  constructor(public components: EnablingComponentsService, private element: ElementRef, public workspace: LoadWorkspaceService, private database: DatabaseService) { }
 
   //@ts-ignore
   @ViewChild('editor') editor: QueryList<ElementRef>
-  task: any
+  task: any // for recieving the task info
+  newTask: any // updating task info
 
+  priorityMenu: boolean = false // choosing the priority of the task
+  datePickerMenu: boolean = false // choosing the due date
   ngOnInit(): void 
   {
     this.components.sleep(100).then(() => this.task = this.components.getTaskInfo())
@@ -28,6 +33,36 @@ export class TaskEditorComponent implements OnInit {
       this.components.taskEditor = false
 
     }
+
+  }
+
+  placeholder(element: any)
+  {
+    if (element.innerText === 'Task name') element.innerText = ''
+    if (element.innerText === 'Description') element.innerText = ''
+
+  }
+
+  saveTask(title: string, description: string, created: string, priority: string, due: string,)
+  {
+    this.newTask = 
+    {
+      title: title,
+      description: description,
+      created: created,
+      priority: priority,
+      due: due,
+
+    }
+    this.workspace.db.me.sections[this.task.index].tasks[this.task.taskIndex] = this.newTask
+    // this.database.update(this.workspace.db)
+    this.components.taskEditor = false
+
+  }
+
+  deleteTask()
+  {
+
 
   }
 
