@@ -30,7 +30,6 @@ export class AddTaskComponent implements OnInit {
   ngOnInit(): void 
   {
     this.selectedPriority = '' // reset priority on taskinit
-
   }
 
   @HostListener('document:click', ['$event', '$event.target'])

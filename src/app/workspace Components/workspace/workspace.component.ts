@@ -10,7 +10,7 @@ import { LoadWorkspaceService } from 'src/app/services/Load Workspace/load-works
 export class WorkspaceComponent implements OnInit {
 
 
-  constructor(public workspace: LoadWorkspaceService, public componentsService: EnablingComponentsService, private router: Router) 
+  constructor(public workspace: LoadWorkspaceService, public components: EnablingComponentsService, private router: Router) 
   {
     
 

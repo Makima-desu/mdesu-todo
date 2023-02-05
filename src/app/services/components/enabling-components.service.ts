@@ -26,9 +26,13 @@ export class EnablingComponentsService {
   }
 
   workspaceSettings: boolean = false // workspace settings component, hidden by default
-  
+
+  sectionEditor: boolean = false
+  sectionClicked: boolean = false
+  sectionIndex: any
+
   taskInfo: TaskInfo = {} // for passing task information
-  taskEditor: boolean = true // task editor component, hidden by default
+  taskEditor: boolean = false // task editor component, hidden by default
   taskClicked: boolean = false
 
   index: number = -1
@@ -37,6 +41,19 @@ export class EnablingComponentsService {
   
   addTask: boolean = false // adding task menu
   addTaskClicked: boolean = false // for checking if the add task button was clicked
+
+  addSectionEditor(element: any, index: number)
+  {
+    if (element)
+    {
+      this.sectionIndex = index
+      this.sectionClicked = true
+      this.sectionEditor = true
+      this.sleep(100).then(() => this.sectionClicked = false)
+
+    }
+
+  }
 
   addTaskEditor(element: any)
   {

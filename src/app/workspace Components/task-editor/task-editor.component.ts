@@ -54,15 +54,26 @@ export class TaskEditorComponent implements OnInit {
       due: due,
 
     }
-    this.workspace.db.me.sections[this.task.index].tasks[this.task.taskIndex] = this.newTask
-    // this.database.update(this.workspace.db)
     this.components.taskEditor = false
+    this.workspace.db.me.sections[this.task.index].tasks[this.task.taskIndex] = this.newTask
+    this.database.update(this.workspace.db)
 
   }
 
+  // completing the task
+  completeTask()
+  {
+    // removing the task from section to the completed inbox
+
+  }
+
+  // deleting the task
   deleteTask()
   {
-
+    this.workspace.db.me.sections[this.task.index].tasks.splice(this.task.taskIndex, 1)
+    this.database.update(this.workspace.db)
+    // this.component save to deleted db array
+    this.components.taskEditor = false
 
   }
 
