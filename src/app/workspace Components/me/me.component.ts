@@ -21,9 +21,10 @@ export class MeComponent implements OnInit {
   @ViewChild('sectionMenu') sectionMenu: QueryList<ElementRef>
   @ViewChild('sectionMenuOptionsButton') sectionSettingsButton: QueryList<ElementRef>
 
-  sectionMenuOptions: number = -1
-  editSectionTitleIndex: number = -1
-  editSectionTitle: boolean = false
+  // variables for indexing the options only to the specificly clicked section
+  sectionMenuOptions: number = -1 // 
+  sectionTitleIndex: number = -1 // if user wants to edit the title, edit this variable
+  editSectionTitle: boolean = false // show/hide section options menu
 
   ngOnInit(): void 
   {

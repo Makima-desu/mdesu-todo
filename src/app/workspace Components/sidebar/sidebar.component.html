@@ -19,10 +19,18 @@
         <div class="h-[95%] relative">
             <!-- inboxes -->
             <ul class="relative gap-2 flex flex-col select-none text-gray-100 text-sm mt-2">
-                <li routerLink="me" routerLinkActive="bg-[#eee]/20" [routerLinkActiveOptions]="{exact: true}" class="p-1 cursor-pointer flex items-center pl-2 mx-2 hover:bg-[#eee]/20 rounded-lg transition-all duration-100"><span class="flex items-center gap-2">Me <span class="text-[#eee]/50 text-[12px]">{{workspace.db.me.sections.length}}</span></span><span class="text-[#eee]/50 text-[12px] flex justify-end w-full">{{dateNow | date: 'MMM, d'}}</span></li>
+                <li routerLink="me" routerLinkActive="bg-[#eee]/20" [routerLinkActiveOptions]="{exact: true}" class="p-1 cursor-pointer flex items-center gap-2 pl-2 mx-2 hover:bg-[#eee]/20 rounded-lg transition-all duration-100">
+                    <span class="">Me</span>
+                    <span class="text-[#eee]/50 text-[12.5px] flex">
+                        {{workspace.db.me.sections.length}}
+                    </span>
+                    <span class="text-[#eee]/50 text-[12px] flex justify-end w-full">
+                        {{dateNow | date: 'MMM, d'}}
+                    </span>
+                </li>
             </ul>
             <div class="absolute h-full w-full">
-                <div class="h-[91.5%] border-b-2 pb-2 pr-2 border-[#3d3d3d] w-full mt-2 overflow-y-auto scrollbar-thin scrollbar-thumb-slate-400 scrollbar-track-slate-700 scrollbar-thumb-rounded scrollbar-track-rounded">
+                <div class="h-[91.5%] border-b-2 pb-2 pr-2 border-[#3d3d3d] w-full mt-2 overflow-y-auto scrollbar-thin scrollbar-thumb-[#eee]/50 scrollbar-track-[#383838]/50 scrollbar-thumb-rounded scrollbar-track-rounded">
                     <!-- overflow y enabled -->
                     <ul class="gap-2 flex flex-col select-none text-gray-100 text-sm scrollbar-thin scrollbar-thumb-slate-400 scrollbar-track-slate-700 scrollbar-thumb-rounded scrollbar-track-rounded">
                         <li *ngFor="let inbox of workspace.db.sidebar" [routerLink]="inbox.title" routerLinkActive="bg-[#eee]/20" [routerLinkActiveOptions]="{exact: true}" class="p-1 cursor-pointer flex items-center pl-2 mx-2 hover:bg-[#eee]/20 rounded-lg transition-all duration-100">{{inbox.title}}</li>

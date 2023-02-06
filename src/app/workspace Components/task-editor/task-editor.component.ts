@@ -60,6 +60,12 @@ export class TaskEditorComponent implements OnInit {
 
   }
 
+  closePrirityMenu()
+  {
+    this.components.sleep(10).then(() => this.priorityMenu = false)
+
+  }
+
   // completing the task
   completeTask()
   {
