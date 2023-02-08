@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { Component, OnInit, HostListener, ViewChild, QueryList, ElementRef } from '@angular/core';
 import { EnablingComponentsService } from 'src/app/services/components/enabling-components.service';
 import { LoadWorkspaceService } from 'src/app/services/Load Workspace/load-workspace.service';
@@ -14,12 +13,15 @@ export class MeComponent implements OnInit {
   constructor(public workspace: LoadWorkspaceService, public components: EnablingComponentsService, private database: DatabaseService, private element: ElementRef) { }
 
   date: any = new Date() // todays date
-  // @ts-ignore
+
+  //@ts-ignore
   @ViewChild('tasks') tasks: QueryList<ElementRef> // tasks section for scrollbar tracking
+  //@ts-ignore
   @ViewChild('sectionTitle') sectionTitle: QueryList<ElementRef>
+  //@ts-ignore
   @ViewChild('page') page: QueryList<ElementRef>
+  //@ts-ignore
   @ViewChild('sectionMenu') sectionMenu: QueryList<ElementRef>
-  @ViewChild('sectionMenuOptionsButton') sectionSettingsButton: QueryList<ElementRef>
 
   // variables for indexing the options only to the specificly clicked section
   sectionMenuOptions: number = -1 // 
@@ -41,7 +43,7 @@ export class MeComponent implements OnInit {
   onClick(event: MouseEvent, targetElement: HTMLElement)
   {
     // hide the menu if clicked outside
-    if (this.element.nativeElement.contains(targetElement) && !this.sectionSettingsButton.nativeElement.contains(targetElement))
+    if (this.element.nativeElement.contains(targetElement))
     {
       this.sectionMenuOptions = -1
 
@@ -52,6 +54,11 @@ export class MeComponent implements OnInit {
   // delete the section
   deleteSection(index: number)
   {
+    if (this.workspace.db.me.sections.routines)
+    {
+      return;
+
+    }
     this.workspace.db.me.sections.splice(index, 1)
     this.database.update(this.workspace.db)
 
@@ -60,6 +67,7 @@ export class MeComponent implements OnInit {
   // save the section title
   saveSectionTitle(index: number)
   {
+    //@ts-ignore
     this.workspace.db.me.sections[index].title = this.sectionTitle.nativeElement.value
     this.database.update(this.workspace.db)
 
@@ -75,44 +83,56 @@ export class MeComponent implements OnInit {
   // function to add a section to Me inbox
   addSection()
   {
-    this.workspace.db.me.sections.push
+    this.workspace.db.me.sections.unshift
     ({
       title: 'Section',
       tasks: [{}]
 
     })
     // splice the task at index 0 so there isnt an empty task
-    this.workspace.db.me.sections[this.workspace.db.me.sections.length - 1].tasks.splice(0)
+    this.workspace.db.me.sections[0].tasks.splice(0)
     this.database.update(this.workspace.db)
-    this.page.nativeElement.scrollLeft = (this.page.nativeElement.scrollWidth + this.page.nativeElement.offsetWidth) 
 
   }
 
-  // move the section to the left in the array
+  // move the section left in the array
   shiftLeft(index: number)
   { 
+    // properly remove and add the section to the moved spot
     this.workspace.db.me.sections.splice(index - 1, 0, this.workspace.db.me.sections[index])
     this.workspace.db.me.sections.splice(index + 1, 1)
-    if (editSectionTitleIndex !== -1)
-    {
-      this.editSectionTitleIndex = index + 1
 
-    }
+    // if any options are open/enabled, move them to the correctly moved index
+    if (this.sectionMenuOptions !== -1) {this.sectionMenuOptions = index - 1}
+    if (this.sectionTitleIndex !== -1) {this.sectionTitleIndex = index - 1}
+    
+    // update db
     this.database.update(this.workspace.db)
 
   }
 
-  // move the section to the right in the array
+  // move the section right in the array
   shiftRight(index: number)
   {
+    // properly remove and add the section to the moved spot
     this.workspace.db.me.sections.splice(index + 2, 0, this.workspace.db.me.sections[index])
     this.workspace.db.me.sections.splice(index, 1)
-    if (editSectionTitleIndex !== -1)
-    {
-      this.editSectionTitleIndex = index + 1
 
-    }
+    // if any options are open/enabled, move them to the correctly moved index
+    if (this.sectionMenuOptions !== -1) {this.sectionMenuOptions = index + 1}
+    if (this.sectionTitleIndex !== -1) {this.sectionTitleIndex = index + 1}
+    
+    // update db
     this.database.update(this.workspace.db)
+
+  }
+
+  // sort by priority either by ascending or descending, depends on the value given
+  sortByPriority(filter: any)
+  {
+    // sorting code
+    // asc = a - z or low to high
+    // desc = z - a high to low
 
   }
 

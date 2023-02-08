@@ -8,14 +8,14 @@ import { DatabaseService } from '../db/database.service';
 })
 export class LandingComponent implements OnInit {
 
-  constructor(private db: DatabaseService, private router: Router) { }
+  constructor(private database: DatabaseService, private router: Router) { }
 
   ngOnInit(): void 
   {
     // check to see if the user has already created a workspace
     // if true, always navigate to the workspace
     // otherwise allow to enter the home page
-    this.db.workspace.subscribe(item =>
+    this.database.workspace.subscribe(item =>
       {
         if (item[0].workspaceEnabled && this.router.url === '/')
         {
@@ -31,11 +31,11 @@ export class LandingComponent implements OnInit {
   // also to turn the workspace var true for redirect purposes
   async createWorkspace()
   {
-    this.db.add()
-    this.db.workspace.subscribe(item =>
+    this.database.add()
+    this.database.workspace.subscribe(item =>
       {
         item[0].workspaceEnabled = true
-        this.db.update(item[0])
+        this.database.update(item[0])
 
       })
 

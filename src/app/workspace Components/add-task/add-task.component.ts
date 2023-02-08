@@ -29,7 +29,7 @@ export class AddTaskComponent implements OnInit {
 
   ngOnInit(): void 
   {
-    this.selectedPriority = '' // reset priority on taskinit
+    this.selectedPriority = 'None' // reset priority on taskinit
   }
 
   @HostListener('document:click', ['$event', '$event.target'])
@@ -58,6 +58,8 @@ export class AddTaskComponent implements OnInit {
     }
   }
 
+  // cant use placeholder on tags
+  // it substitutes it for a placeholder
   placeholder(element: any)
   {
     if (element.innerText === 'Task name') element.innerText = ''
@@ -76,6 +78,7 @@ export class AddTaskComponent implements OnInit {
       description: description, // task description
       priority: priority, // task priority
       created: new Date().toDateString(),
+      // maybe date in miliseconds for comparison
       due: due,
 
     })

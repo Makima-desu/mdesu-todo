@@ -21,9 +21,9 @@ export class SidebarComponent implements OnInit {
     this.sleep(100).then(() => 
     {
       // check to see if the first index of the array title includes 'remove', then and remove it
-      if (this.workspace.db.sidebar[0].title === 'remove' && this.workspace.db.completed.tasks[0].title === 'remove')
+      if (this.workspace.db.sidebar.categories[0].title === 'remove' && this.workspace.db.completed.tasks[0].title === 'remove')
       {
-        this.workspace.db.sidebar.splice(0)
+        this.workspace.db.sidebar.categories.splice(0)
         this.workspace.db.completed.tasks.splice(0)
         this.dbService.update(this.workspace.db)
 
@@ -57,15 +57,52 @@ export class SidebarComponent implements OnInit {
 
   }
 
-  addSidebarInbox()
+  // 
+  addCategory()
   {
-    this.workspace.db.sidebar.push
+    this.workspace.db.sidebar.categories.push
     ({
-      title: 'Viria'
+      title: 'Empty Category',
+      inbox:
+      [{
+        title: 'Test',
+        sections:
+        [{
+          title: 'remove',
+          tasks:
+          [{
+            title: 'remove'
+
+          }]
+
+        }]
+
+      }]
+
 
     })
-    // this.dbService.update(this.workspace.db) enable this later
+    // this.workspace.db.sidebar.categories.inbox[0].sections.splice(0)
+    this.workspace.db.sidebar.categories[this.workspace.db.sidebar.categories.length - 1].inbox.splice(0, 1)
+    // this.dbService.update(this.workspace.db)
+    console.log(this.workspace.db.sidebar.categories)
+
+  }
+
+  // delete category
+  deleteCategory(index: number)
+  {
+    this.workspace.db.sidebar.categories.splice(index, 1)
+    this.dbService.update(this.workspace.db)
 
   }
 
 }
+
+/* Where I left off 
+  - Configure adding the proper information for category and inboxes for the database
+  - proper design on sidebar with all the information
+    // includes
+      - category options
+        - delete, rename, add inbox, move up/down
+      - 
+*/

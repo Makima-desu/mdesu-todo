@@ -45,6 +45,7 @@ export class TaskEditorComponent implements OnInit {
 
   saveTask(title: string, description: string, created: string, priority: string, due: string,)
   {
+    if (due === '') {due = 'Not due'}
     this.newTask = 
     {
       title: title,

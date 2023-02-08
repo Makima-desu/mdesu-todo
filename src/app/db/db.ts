@@ -18,22 +18,29 @@ export interface Workspace
 
     }
     sidebar?: // sidebar inbox array
-    [{
-        title?: string // title of the group
-        sections?: // all the sections of that group
+    {
+        categories?: // all the sections of that group
         [{
-            title?: string // title of section
-            tasks?: // tasks of that section
+            title?: string // title of the category / or group
+            inbox?:
             [{
-                title?: string // title of task
-                description?: string // description of task
-                created?: string // when task was created
-                priority?: string // what priority is that task
-
+                title?: string // title of the inbox
+                sections?:
+                [{
+                    title?: string // title of the section
+                    tasks?: // tasks of that section
+                    [{
+                        title?: string // title of task
+                        description?: string // description of task
+                        created?: string // when task was created
+                        priority?: string // what priority is that task
+        
+                    }]
+                }]
             }]
         }]
 
-    }]
+    }
     me?: // personal inbox of the user, cant be deleted
     {
         sections?: // store the sections of the inbox
@@ -46,6 +53,7 @@ export interface Workspace
                 description?: string // description of the task
                 created?: string // when was the task created
                 priority?: string // task priortiy
+                due?: string // for tracking the time of the task's due
 
             }]
             created?: string // when was the section created

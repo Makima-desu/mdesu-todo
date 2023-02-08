@@ -20,7 +20,25 @@ export class DatabaseService
       {
 
       },
-      sidebar: [{title: 'remove'}], // create sidebar in database
+      sidebar: // create sidebar in database
+      {
+        categories:
+        [{
+          title: 'remove',
+          inbox:
+          [{
+            title: 'remove',
+            sections:
+            [{
+              title: 'remove'
+
+            }]
+
+          }]
+          
+        }]
+        
+      }, 
       completed: 
       {
         tasks:
@@ -40,9 +58,10 @@ export class DatabaseService
           tasks:
           [{
             title: 'Create Your Routine!',
-            description: '',
+            description: 'Setting routines can help remembering tasks which are not as important as the other.',
             created: new Date().toDateString(),
-            priority: ''
+            priority: 'None',
+            due: 'Not Due'
 
           }],
           created: new Date().toDateString()          
