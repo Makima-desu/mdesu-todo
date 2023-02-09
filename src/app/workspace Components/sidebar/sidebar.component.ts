@@ -1,4 +1,4 @@
-import { Component, OnInit, HostListener } from '@angular/core';
+import { Component, OnInit, HostListener, ViewChild, ElementRef, QueryList, ViewChildren } from '@angular/core';
 import { DatabaseService } from 'src/app/db/database.service';
 import { LoadWorkspaceService } from 'src/app/services/Load Workspace/load-workspace.service';
 
@@ -11,12 +11,21 @@ export class SidebarComponent implements OnInit {
   dateNow = new Date()
   sidebar: boolean = true
 
+  categoryIndex: number[] = [0] // an array to hold value for showing or hiding the inboxes of different categories
+  categoryOptionsIndex: number = -1
+
+  // @ts-ignore
+  @ViewChild('categoryOptions') categoryOptions: QueryList<ElementRef>
+  // @ts-ignore
+  @ViewChild('categoryOptionsButton') categoryOptionsButton: ElementRef
+
   sleep(ms: any)
   {
     return new Promise(resolve => setTimeout(resolve, ms));
+
   }
 
-  constructor(public workspace: LoadWorkspaceService, private dbService: DatabaseService) 
+  constructor(public workspace: LoadWorkspaceService, private dbService: DatabaseService, private element: ElementRef) 
   {
     this.sleep(100).then(() => 
     {
@@ -40,6 +49,21 @@ export class SidebarComponent implements OnInit {
 
     }
     else this.sidebar = true
+
+
+  }
+
+  changeIndex(index: number)
+  {
+    this.categoryOptionsIndex = index
+
+  }
+
+  @HostListener('document:click', ['$event', '$event.target'])
+  onClick(event: MouseEvent, targetElement: HTMLElement)
+  {
+    // hide the menu if clicked outside
+    //@ts-ignore
 
   }
 
@@ -82,9 +106,8 @@ export class SidebarComponent implements OnInit {
 
     })
     // this.workspace.db.sidebar.categories.inbox[0].sections.splice(0)
-    this.workspace.db.sidebar.categories[this.workspace.db.sidebar.categories.length - 1].inbox.splice(0, 1)
-    // this.dbService.update(this.workspace.db)
-    console.log(this.workspace.db.sidebar.categories)
+    // this.workspace.db.sidebar.categories[this.workspace.db.sidebar.categories.length - 1].inbox.splice(0, 1)
+    this.dbService.update(this.workspace.db)
 
   }
 
