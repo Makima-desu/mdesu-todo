@@ -9,19 +9,22 @@
                     </svg>
                 </div>
             </div>
-            <div class="w-full px-6 py-4 select-none">
+            <div class="w-full px-6 py-4 select-none border-b border-[#383838]">
                 <label for="categoryTitle" class="text-[#eee]/80 font-bold tracking-tight">Category Name</label>
                 <input name="categoryTitle" autocomplete="off" spellcheck="false" placeholder="Category Name" #categoryTitle [value]="categoryInfo.title" class="bg-[#262626] w-full outline-none mt-1 focus:border-[#686868] placeholder:text-[#eee]/30 rounded py-1.5 px-2 border border-[#484848] transition-all duration-300">
-                <span class="flex justify-center py-2 select-none">Inboxes</span>
+                <span class="flex justify-center mt-8 select-none">Inboxes</span>
             </div>
-            <div class="border-b-2 border-[#383838] h-full w-full px-6 py-4 overflow-y-auto">
-                <div *ngFor="let inbox of categoryInfo.inboxes" class="">
-                    <span>{{inbox.title}}</span>
+            <div class="border-b-2 border-[#383838] h-full w-full px-6 py-4 mt-4 overflow-y-auto flex flex-col gap-4">
+                <div *ngFor="let inbox of categoryInfo.inboxes; let inboxIndex = index" class="w-full">
+                    <input (click)="inboxTitleIndex = inboxIndex" #inboxTitle placeholder="Inbox name" [value]="inbox.title" class="bg-transparent w-full p-1 px-2 outline outline-1 rounded outline-[#383838] focus:outline-[#484848] transition-all duration-300">
+                    <div *ngIf="inboxTitleIndex === inboxIndex" class="w-full flex justify-end gap-4 pt-2 items-center">
+                        <button (click)="saveInboxTitle(inboxTitle.value, inboxIndex)" class="py-[4px] w-16 text-[13px] bg-rose-500/50 hover:bg-rose-500/70 rounded border border-[#494949]/40 transition-all duration-150">Save</button>
+                    </div>
                 </div>
             </div>
             <div class="w-full flex justify-end gap-4 p-4 items-center">
                 <button (click)="components.editCategory = false" class="py-[6px] w-16 text-[13px] bg-[#eee]/10 rounded border border-[#494949]/40 transition-all duration-150 hover:bg-[#eee]/30">Cancel</button>
-                <button class="py-[6px] w-16 text-[13px] bg-rose-500/50 hover:bg-rose-500/70 rounded border border-[#494949]/40 transition-all duration-150">Save</button>
+                <button (click)="saveCategory(categoryTitle.value); components.editCategory = false" class="py-[6px] w-16 text-[13px] bg-rose-500/50 hover:bg-rose-500/70 rounded border border-[#494949]/40 transition-all duration-150">Save</button>
             </div>
         </div>
     </div>

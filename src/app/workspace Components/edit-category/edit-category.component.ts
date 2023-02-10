@@ -1,4 +1,4 @@
-import { Component, OnInit, HostListener, ViewChild } from '@angular/core';
+import { Component, OnInit, HostListener, ViewChild, QueryList, ViewChildren, Query, ElementRef } from '@angular/core';
 import { DatabaseService } from 'src/app/db/database.service';
 import { EnablingComponentsService } from 'src/app/services/components/enabling-components.service';
 import { LoadWorkspaceService } from 'src/app/services/Load Workspace/load-workspace.service';
@@ -9,7 +9,10 @@ import { LoadWorkspaceService } from 'src/app/services/Load Workspace/load-works
 })
 export class EditCategoryComponent implements OnInit {
 
+  inboxTitleIndex: number = -1
   categoryInfo: any
+  // @ts-ignore
+  @ViewChildren('inboxTitle') inboxTitle: QueryList<ElementRef>
 
   constructor(public components: EnablingComponentsService, public workspace: LoadWorkspaceService, private database: DatabaseService) 
   {
@@ -22,7 +25,9 @@ export class EditCategoryComponent implements OnInit {
 
   }
 
-  ngOnInit(): void {
+  ngOnInit(): void
+  {
+    
   }
 
   // @ts-ignore
@@ -40,7 +45,15 @@ export class EditCategoryComponent implements OnInit {
 
   }
 
-  saveTitle(title: string)
+  // save the specific title inbox
+  saveInboxTitle(title: string, index: number)
+  {
+    this.workspace.db.sidebar.categories[this.categoryInfo.index].inbox[index].title = title
+    this.database.update(this.workspace.db)
+
+  }
+
+  saveCategory(title: string)
   {
     this.workspace.db.sidebar.categories[this.categoryInfo.index].title = title
     this.database.update(this.workspace.db)

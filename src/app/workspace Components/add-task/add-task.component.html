@@ -1,8 +1,8 @@
 <div class="absolute w-screen h-[60%] flex justify-center place-items-center">
     <div #addTaskMenu class="w-96 border z-10 border-[#5b5b5b] rounded-lg bg-[#242424] shadow-2xl">
         <div class="flex flex-col gap-1 border-b-2 border-[#383838] p-4 pb-0 relative">
-            <span #taskTitle contenteditable="true" role="textbox" class="text-[16px] text-[#eee]/60 overflow-hidden outline-none resize-none block w-full" (focus)="placeholder(taskTitle)">Task name</span>
-            <div #taskDesc role="textbox" contenteditable="true" class="text-[14px] text-[#eee]/50 aria overflow-hidden resize-none outline-none" (focus)="placeholder(taskDesc)">Description</div>
+            <input #taskTitle contenteditable="true" placeholder="Task name" role="textbox" class="text-[16px] text-[#eee]/60 overflow-hidden outline-none resize-none block w-full bg-transparent placeholder:text-[#eee]/60" spellcheck="false">
+            <div #taskDesc role="textbox" spellcheck="false" contenteditable="true" class="text-[14px] text-[#eee]/50 aria overflow-hidden resize-none outline-none" (focus)="placeholder(taskDesc)">Description</div>
             <div class="flex text-[14px] pb-4 mt-2 gap-2">
                 <div #datePickerButton class="shadow">
                     <button (click)="datePickerMenu ? datePickerMenu = false : datePickerMenu = true; priorityMenu = false" class="px-1 border border-[#383838] shadow text-[#eee]/70 hover:bg-[#eee]/10 rounded flex items-center transition-all duration-200">

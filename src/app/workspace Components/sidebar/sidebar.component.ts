@@ -27,7 +27,7 @@ export class SidebarComponent implements OnInit {
 
   }
 
-  constructor(public workspace: LoadWorkspaceService, private dbService: DatabaseService, private element: ElementRef, public components: EnablingComponentsService) 
+  constructor(public workspace: LoadWorkspaceService, private database: DatabaseService, private element: ElementRef, public components: EnablingComponentsService) 
   {
     this.sleep(100).then(() => 
     {
@@ -36,7 +36,7 @@ export class SidebarComponent implements OnInit {
       {
         this.workspace.db.sidebar.categories.splice(0)
         this.workspace.db.completed.tasks.splice(0)
-        this.dbService.update(this.workspace.db)
+        this.database.update(this.workspace.db)
 
       }
 
@@ -110,7 +110,7 @@ export class SidebarComponent implements OnInit {
   {
     this.workspace.db.sidebar.categories.push
     ({
-      title: 'Empty Category',
+      title: 'Category',
       inbox:
       [{
         title: 'Test',
@@ -129,9 +129,8 @@ export class SidebarComponent implements OnInit {
 
 
     })
-    // this.workspace.db.sidebar.categories.inbox[0].sections.splice(0)
-    // this.workspace.db.sidebar.categories[this.workspace.db.sidebar.categories.length - 1].inbox.splice(0, 1)
-    this.dbService.update(this.workspace.db)
+    this.workspace.db.sidebar.categories[this.workspace.db.sidebar.categories.length - 1].inbox.splice(0, 1)
+    this.database.update(this.workspace.db)
 
   }
 
@@ -139,17 +138,50 @@ export class SidebarComponent implements OnInit {
   deleteCategory(index: number)
   {
     this.workspace.db.sidebar.categories.splice(index, 1)
-    this.dbService.update(this.workspace.db)
+    this.database.update(this.workspace.db)
+
+  }
+
+  // move the section left in the array
+  shiftLeft(index: number)
+  { 
+    // properly remove and add the section to the moved spot
+    this.workspace.db.sidebar.categories.splice(index - 1, 0, this.workspace.db.sidebar.categories[index])
+    this.workspace.db.sidebar.categories.splice(index + 1, 1)
+
+    // update db
+    this.database.update(this.workspace.db)
+
+  }
+
+  // move the section right in the array
+  shiftRight(index: number)
+  {
+    // properly remove and add the section to the moved spot
+    this.workspace.db.sidebar.categories.splice(index + 2, 0, this.workspace.db.sidebar.categories[index])
+    this.workspace.db.sidebar.categories.splice(index, 1)
+
+    // update db
+    this.database.update(this.workspace.db)
+
+  }
+
+  addInbox(index: number)
+  {
+    this.workspace.db.sidebar.categories[index].inbox.push
+    ({
+      title: 'Inbox',
+      sections: 
+      [{
+        title: 'remove'
+
+      }]
+
+    })
+
+    this.workspace.db.sidebar.categories[index].inbox[this.workspace.db.sidebar.categories[index].inbox.length - 1].sections.splice(0, 1)
+    this.database.update(this.workspace.db)
 
   }
 
 }
-
-/* Where I left off 
-  - Configure adding the proper information for category and inboxes for the database
-  - proper design on sidebar with all the information
-    // includes
-      - category options
-        - delete, rename, add inbox, move up/down
-      - 
-*/
