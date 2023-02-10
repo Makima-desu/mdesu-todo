@@ -46,9 +46,9 @@
                 <span class="text-[#eee]/70 p-2 select-none border-b border-[#303030] flex w-full">Categories</span>
                 <div class="h-[88%] pb-2 pr-4 w-full mt-2 overflow-y-auto scrollbar-thin scrollbar-thumb-[#eee]/50 scrollbar-track-[#383838]/50 scrollbar-thumb-rounded scrollbar-track-rounded">
                     <!-- overflow y enabled -->
-                    <ul *ngFor="let category of workspace.db.sidebar.categories; let index = index" class="flex pt-2 flex-col select-none text-gray-100 scrollbar-thin scrollbar-thumb-slate-400 scrollbar-track-slate-700 scrollbar-thumb-rounded scrollbar-track-rounded">
-                        <li class="flex items-center pl-2 ml-2">
-                            <span class="w-full text-[14px]">{{category.title | truncate: 20}}</span>
+                    <ul *ngFor="let category of workspace.db.sidebar.categories; let index = index" class="flex pt-2 flex-col select-none text-gray-100 scrollbar-thin scrollbar-thumb-slate-400 scrollbar-track-slate-700 scrollbar-thumb-rounded scrollbar-track-rounded w-full">
+                        <li class="flex items-center pl-2 ml-2" [ngClass]="{'mb-4': !(categoryIndex.indexOf(index) >= 0)}">
+                            <span class="w-full text-[14px]">{{category.title | truncate: 14}}</span>
                             <div class="flex gap-1">
                                 <svg *ngIf="!(categoryIndex.indexOf(index) >= 0)" (click)="categoryIndex.push(index)" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" class="w-5 cursor-pointer transition-all duration-150 hover:text-gray-400">
                                     <path strokeLinecap="round" strokeLinejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" />
@@ -60,6 +60,7 @@
                                 <svg #categoryOptionsButton (click)="changeIndex(index)" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" class="w-7 cursor-pointer transition-all duration-150 hover:text-gray-400">
                                     <path strokeLinecap="round" strokeLinejoin="round" d="M6.75 12a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM12.75 12a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM18.75 12a.75.75 0 11-1.5 0 .75.75 0 011.5 0z" />
                                 </svg>
+                                <!-- Menu -->
                                 <div *ngIf="categoryOptionsIndex === index" #categoryOptions class="absolute w-full bg-[#303030] shadow border-[#434343] rounded z-10">
                                     <div class="text-[12px] flex flex-col">
                                         <div class="border-b border-[#404040] p-1">
@@ -83,7 +84,7 @@
                                                 </svg>
                                                 Add Inbox
                                             </span>
-                                            <span class="cursor-pointer p-1.5 flex gap-2 items-center rounded hover:bg-[#eee]/20 transition-all duration-200">
+                                            <span #button (click)="components.addCategoryEditor(button); components.loadCategoryInfo(category.title, category.inbox, index)" class="cursor-pointer p-1.5 flex gap-2 items-center rounded hover:bg-[#eee]/20 transition-all duration-200">
                                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" class="w-5">
                                                     <path strokeLinecap="round" strokeLinejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
                                                 </svg>
@@ -102,15 +103,16 @@
                                 </div>
                             </div>
                         </li>
-                        <ul *ngFor="let inbox of category.inbox" class="text-[13px]">
-                            <li routerLinkActive="bg-[#eee]/20" [routerLinkActiveOptions]="{exact: true}" class="p-0.5 mt-2 cursor-pointer flex items-center gap-2 pl-2 mx-2 hover:bg-[#eee]/20 rounded-lg transition-all duration-100">
-                                <div *ngIf="categoryIndex.indexOf(index) >= 0">
-                                    <span>{{inbox.title}}</span>
-
-                                </div>
-                                <!-- <span class="text-[#eee]/50 text-[12px] flex justify-end w-full">{{inbox.sections.length}}</span> -->
-                            </li>
-                        </ul>
+                        <div *ngIf="(categoryIndex.indexOf(index) >= 0)" class="mb-4">
+                            <ul *ngFor="let inbox of category.inbox" class="">
+                                <li routerLinkActive="bg-[#eee]/20" [routerLinkActiveOptions]="{exact: true}" class="p-0.5 mt-2 cursor-pointer flex items-center gap-2 pl-2 mx-2 hover:bg-[#eee]/20 rounded-lg transition-all duration-100">
+                                    <div *ngIf="categoryIndex.indexOf(index) >= 0" class="flex items-center w-full">
+                                        <span class="w-full">{{inbox.title}}</span>
+                                        <span class="text-[#eee]/50 text-[12px] flex justify-end w-full">{{inbox.sections.length}}</span>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
                     </ul>
                 </div>
             </div>

@@ -12,6 +12,7 @@ import { AddTaskComponent } from './workspace Components/add-task/add-task.compo
 import { MeComponent } from './workspace Components/me/me.component';
 import { AddInboxSidebarComponent } from './workspace Components/add-inbox-sidebar/add-inbox-sidebar.component';
 import { TruncatePipe } from './pipes/truncate/truncate.pipe';
+import { EditCategoryComponent } from './workspace Components/edit-category/edit-category.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { TruncatePipe } from './pipes/truncate/truncate.pipe';
     MeComponent,
     AddInboxSidebarComponent,
     TruncatePipe,
+    EditCategoryComponent,
   ],
   imports: [
     BrowserModule,

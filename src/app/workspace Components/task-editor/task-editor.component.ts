@@ -20,7 +20,7 @@ export class TaskEditorComponent implements OnInit {
   datePickerMenu: boolean = false // choosing the due date
   ngOnInit(): void 
   {
-    this.components.sleep(100).then(() => this.task = this.components.getTaskInfo())
+    this.components.sleep(1).then(() => this.task = this.components.getTaskInfo())
 
   }
 

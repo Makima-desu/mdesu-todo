@@ -13,6 +13,14 @@ interface TaskInfo
   taskIndex?: number
 }
 
+interface Category
+{
+  title?: string
+  inboxes?: [{}]
+  index?: number
+
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -41,6 +49,22 @@ export class EnablingComponentsService {
   
   addTask: boolean = false // adding task menu
   addTaskClicked: boolean = false // for checking if the add task button was clicked
+
+  editCategory: boolean = false
+  editCategoryClicked: boolean = false
+  categoryInfo: Category = {}
+
+  addCategoryEditor(element: any)
+  {
+    if (element)
+    {
+      this.editCategoryClicked = true
+      this.editCategory = true
+      this.sleep(100).then(() => this.editCategoryClicked = false)
+
+    }
+
+  }
 
   addSectionEditor(element: any, index: number)
   {
@@ -83,6 +107,24 @@ export class EnablingComponentsService {
       // to show the menu again because the condition is always false
 
     }
+
+  }
+
+  loadCategoryInfo(title: string, inboxes: any, index: number)
+  {
+    this.categoryInfo =
+    {
+      title: title,
+      inboxes: inboxes,
+      index: index
+
+    }
+
+  }
+
+  getCategoryInfo()
+  {
+    return this.categoryInfo
 
   }
 

@@ -1,5 +1,6 @@
 import { Component, OnInit, HostListener, ViewChild, ElementRef, QueryList, ViewChildren } from '@angular/core';
 import { DatabaseService } from 'src/app/db/database.service';
+import { EnablingComponentsService } from 'src/app/services/components/enabling-components.service';
 import { LoadWorkspaceService } from 'src/app/services/Load Workspace/load-workspace.service';
 
 @Component({
@@ -13,11 +14,12 @@ export class SidebarComponent implements OnInit {
 
   categoryIndex: number[] = [0] // an array to hold value for showing or hiding the inboxes of different categories
   categoryOptionsIndex: number = -1
+  categoryOptionsClicked: boolean = false
 
   // @ts-ignore
-  @ViewChild('categoryOptions') categoryOptions: QueryList<ElementRef>
+  @ViewChild('categoryOptions') categoryOptions: ElementRef
   // @ts-ignore
-  @ViewChild('categoryOptionsButton') categoryOptionsButton: ElementRef
+  @ViewChildren('categoryOptionsButton') categoryOptionsButton: QueryList<ElementRef>
 
   sleep(ms: any)
   {
@@ -25,7 +27,7 @@ export class SidebarComponent implements OnInit {
 
   }
 
-  constructor(public workspace: LoadWorkspaceService, private dbService: DatabaseService, private element: ElementRef) 
+  constructor(public workspace: LoadWorkspaceService, private dbService: DatabaseService, private element: ElementRef, public components: EnablingComponentsService) 
   {
     this.sleep(100).then(() => 
     {
@@ -63,7 +65,29 @@ export class SidebarComponent implements OnInit {
   onClick(event: MouseEvent, targetElement: HTMLElement)
   {
     // hide the menu if clicked outside
-    //@ts-ignore
+    // loop through each option button
+    this.categoryOptionsButton.forEach(button =>
+      {
+        // if the option button is clicked
+        // change the var to true
+        // and wait literally any time to change to false
+        if (button.nativeElement.contains(targetElement))
+        {
+          this.categoryOptionsClicked = true
+          this.sleep(1).then(() => this.categoryOptionsClicked = false)
+          // need the sleep purely because i have no idea how detect the click outside the element
+          // while at the same time check to see if the button was pressed
+
+        }
+
+      })
+
+    // if the click happens outisde or inside and the option button is "false" then hide the menu
+    if ((!this.categoryOptions.nativeElement.contains(targetElement) || this.categoryOptions.nativeElement.contains(targetElement)) && this.categoryOptionsClicked === false)
+    {
+      this.categoryOptionsIndex = -1
+
+    }
 
   }
 

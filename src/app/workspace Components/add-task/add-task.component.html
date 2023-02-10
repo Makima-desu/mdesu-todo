@@ -36,9 +36,9 @@
         </div>
         <div class="flex w-full justify-end gap-4 p-4 text-[#eee]">
             <!-- close the menu -->
-            <button (click)="components.addTask = false" class="py-[6px] w-16 text-[13px] bg-[#eee]/10 rounded-lg transition-all duration-150 hover:bg-[#eee]/30">Cancel</button>
+            <button (click)="components.addTask = false" class="py-[6px] w-16 text-[13px] bg-[#eee]/10 rounded border border-[#494949]/40 transition-all duration-150 hover:bg-[#eee]/30">Cancel</button>
             <!-- save task to inbox -->
-            <button (click)="saveTask(taskTitle.innerText, taskDesc.innerText, selectedPriority, schedulerDateInput)" class="py-[6px] w-16 text-[13px] hover:bg-[#c53727] rounded-lg transition-all duration-150 bg-[#de4c4a]">Save</button>
+            <button (click)="saveTask(taskTitle.innerText, taskDesc.innerText, selectedPriority, schedulerDateInput)" class="py-[6px] w-16 text-[13px] bg-rose-500/50 hover:bg-rose-500/70 rounded border border-[#494949]/40 transition-all duration-150">Save</button>
         </div>
     </div>
 </div>
