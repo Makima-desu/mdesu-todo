@@ -68,13 +68,14 @@ export interface Workspace
             description?: string // description of task
             created?: string // when task was created
             priority?: string // what priority is that task
+            completed?: string // date of completion
 
         }]
 
     }
     deleted?:
     {
-        tasks:
+        tasks?:
         [{
             title?: string // title of task
             description?: string // description of task

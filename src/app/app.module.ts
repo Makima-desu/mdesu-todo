@@ -13,6 +13,9 @@ import { MeComponent } from './workspace Components/me/me.component';
 import { AddInboxSidebarComponent } from './workspace Components/add-inbox-sidebar/add-inbox-sidebar.component';
 import { TruncatePipe } from './pipes/truncate/truncate.pipe';
 import { EditCategoryComponent } from './workspace Components/edit-category/edit-category.component';
+import { CompletedComponent } from './workspace Components/completed/completed.component';
+import { DeletedComponent } from './workspace Components/deleted/deleted.component';
+import { InboxComponent } from './workspace Components/inbox/inbox.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +30,9 @@ import { EditCategoryComponent } from './workspace Components/edit-category/edit
     AddInboxSidebarComponent,
     TruncatePipe,
     EditCategoryComponent,
+    CompletedComponent,
+    DeletedComponent,
+    InboxComponent,
   ],
   imports: [
     BrowserModule,

@@ -11,6 +11,7 @@ interface TaskInfo
   due?: string
   index?: number
   taskIndex?: number
+  inbox?: string
 }
 
 interface Category
@@ -128,7 +129,7 @@ export class EnablingComponentsService {
 
   }
 
-  loadTaskInfo(title: string, description: string, priority: string, created: string, due:string, section: string, sectionIndex: number, taskIndex: number): void
+  loadTaskInfo(title: string, description: string, priority: string, created: string, due:string, section: string, sectionIndex: number, taskIndex: number, inbox: string): void
   {
     this.taskEditor = true
     this.taskInfo = 
@@ -141,7 +142,7 @@ export class EnablingComponentsService {
       due: due,
       index: sectionIndex,
       taskIndex: taskIndex,
-
+      inbox: inbox
 
     }
 

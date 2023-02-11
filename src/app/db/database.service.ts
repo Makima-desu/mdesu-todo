@@ -49,6 +49,11 @@ export class DatabaseService
         
 
       },
+      deleted:
+      {
+        tasks:[{}]
+
+      },
       me:
       {
         sections:
@@ -60,7 +65,7 @@ export class DatabaseService
             title: 'Create Your Routine!',
             description: 'Setting routines can help remembering tasks which are not as important as the other.',
             created: new Date().toDateString(),
-            priority: 'None',
+            priority: 'Low',
             due: 'Not Due'
 
           }],

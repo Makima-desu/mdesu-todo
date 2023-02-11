@@ -36,6 +36,7 @@ export class SidebarComponent implements OnInit {
       {
         this.workspace.db.sidebar.categories.splice(0)
         this.workspace.db.completed.tasks.splice(0)
+        this.workspace.db.deleted.tasks.splice(0)
         this.database.update(this.workspace.db)
 
       }
@@ -110,7 +111,7 @@ export class SidebarComponent implements OnInit {
   {
     this.workspace.db.sidebar.categories.push
     ({
-      title: 'Category',
+      title: 'New Category',
       inbox:
       [{
         title: 'Test',
@@ -170,7 +171,7 @@ export class SidebarComponent implements OnInit {
   {
     this.workspace.db.sidebar.categories[index].inbox.push
     ({
-      title: 'Inbox',
+      title: 'New Inbox',
       sections: 
       [{
         title: 'remove'

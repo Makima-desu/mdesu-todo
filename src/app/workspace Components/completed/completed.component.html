@@ -1,0 +1,54 @@
+<div class="flex flex-col pt-4 px-4 text-white w-full h-full">
+    <div class="select-none flex w-full justify-center top-4 items-center border-b border-[#363636]">
+        <h1 class="text-lg">Completed 
+            <span class="text-[12px] text-[#eee]/50">
+                {{date | date: 'EEEE, MMM d YYYY'}}
+            </span>
+            <span class="text-[12px] text-[#eee]/50 flex justify-center">
+                {{date | date: 'hh:mm:ss a'}}
+            </span>
+        </h1>
+        <!-- adding task to the current inbox i.e if its today, it adds to today -->
+    </div>
+    <!-- Page content -->
+    <div #page class="w-full flex px-8 pt-8 h-full relative overflow-x-auto overflow-y-hidden scrollbar-thin scrollbar-thumb-[#eee]/50 scrollbar-track-[#383838]/50 scrollbar-thumb-rounded scrollbar-track-rounded">
+        <div class="absolute flex gap-10 h-[90%]">
+            <!-- No Priority -->
+            <div class="relative w-72 group h-full rounded-lg select-none">
+                <div *ngFor="let completedTask of workspace.db.completed.tasks; let index = index" class="">
+                    <div *ngIf="completedTask.priority === 'None'">
+                        {{completedTask.title}}
+                    </div>
+                </div>
+            </div>
+            <!-- Low Priority -->
+            <div class="relative w-72 group h-full rounded-lg select-none">
+                <div *ngFor="let completedTask of workspace.db.completed.tasks; let index = index" class="">
+
+                </div>
+            </div>
+            <!-- Medium Priority -->
+            <div class="relative w-72 group h-full rounded-lg select-none">
+                <div *ngFor="let completedTask of workspace.db.completed.tasks; let index = index" class="">
+
+                </div>
+            </div>
+            <!-- High Priority -->
+            <div class="relative w-72 group h-full rounded-lg select-none">
+                <div *ngFor="let completedTask of workspace.db.completed.tasks; let index = index" class="">
+                    <div *ngIf="completedTask.priority === 'High'">
+                        <span>{{completedTask.title}}</span>
+                    </div>
+                </div>
+            </div>
+            <!-- ALL -->
+            <div class="relative w-72 group h-full rounded-lg select-none border">
+                <div *ngFor="let completedTask of workspace.db.completed.tasks; let index = index" class="">
+                    <div>
+                        <span>{{completedTask.title}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

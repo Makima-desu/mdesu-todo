@@ -85,7 +85,7 @@ export class MeComponent implements OnInit {
   {
     this.workspace.db.me.sections.unshift
     ({
-      title: 'Section',
+      title: 'New Section',
       tasks: [{}]
 
     })

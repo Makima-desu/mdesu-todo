@@ -18,7 +18,11 @@ export class WorkspaceComponent implements OnInit {
 
   ngOnInit(): void 
   {
-    this.router.navigate(['/workspace/me'])
+    if (this.router.url === '/workspace')
+    {
+      this.router.navigate(['/workspace/me'])
+
+    }
 
   }
   

@@ -70,7 +70,14 @@ export class TaskEditorComponent implements OnInit {
   // completing the task
   completeTask()
   {
-    // removing the task from section to the completed inbox
+    if (this.task.inbox === 'me')
+    {
+      // remove the task from array
+      let splicedTask = this.workspace.db.me.sections[this.task.index].tasks.splice(this.task.taskIndex, 1)
+      this.workspace.db.completed.tasks.push(splicedTask[0]) // pass the task into completed array
+      this.database.update(this.workspace.db) // update db
+
+    }
 
   }
 
