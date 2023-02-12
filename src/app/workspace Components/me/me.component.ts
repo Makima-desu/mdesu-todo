@@ -1,4 +1,5 @@
 import { Component, OnInit, HostListener, ViewChild, QueryList, ElementRef } from '@angular/core';
+import { Router } from '@angular/router';
 import { EnablingComponentsService } from 'src/app/services/components/enabling-components.service';
 import { LoadWorkspaceService } from 'src/app/services/Load Workspace/load-workspace.service';
 import {timer} from 'rxjs'
@@ -10,7 +11,7 @@ import { DatabaseService } from 'src/app/db/database.service';
 })
 export class MeComponent implements OnInit {
 
-  constructor(public workspace: LoadWorkspaceService, public components: EnablingComponentsService, private database: DatabaseService, private element: ElementRef) { }
+  constructor(private router: Router, public workspace: LoadWorkspaceService, public components: EnablingComponentsService, private database: DatabaseService, private element: ElementRef) { }
 
   date: any = new Date() // todays date
 
@@ -30,6 +31,7 @@ export class MeComponent implements OnInit {
 
   ngOnInit(): void 
   {
+    // location.reload()
     // utilize this function to check if certain tasks are overdue
     // currently it updates the clock
     timer(0, 1000).subscribe(() =>

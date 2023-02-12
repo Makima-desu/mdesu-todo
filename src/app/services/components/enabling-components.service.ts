@@ -129,20 +129,20 @@ export class EnablingComponentsService {
 
   }
 
-  loadTaskInfo(title: string, description: string, priority: string, created: string, due:string, section: string, sectionIndex: number, taskIndex: number, inbox: string): void
+  loadTaskInfo(title: string, description: string, priority: string, created: string, due: string, section: string, sectionIndex: number, taskIndex: number, inbox: string): void
   {
     this.taskEditor = true
     this.taskInfo = 
     {
-      title: title,
-      description: description,
-      priority: priority,
-      created: created,
-      section: section,
-      due: due,
-      index: sectionIndex,
-      taskIndex: taskIndex,
-      inbox: inbox
+      title: title, // title
+      description: description, // desc
+      priority: priority, // task priority
+      created: created, // task creation date
+      section: section, //
+      due: due, // when its due
+      index: sectionIndex, // the section index
+      taskIndex: taskIndex, // task index
+      inbox: inbox // which inbox it belongs
 
     }
 

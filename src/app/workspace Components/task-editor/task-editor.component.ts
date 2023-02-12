@@ -20,7 +20,7 @@ export class TaskEditorComponent implements OnInit {
   datePickerMenu: boolean = false // choosing the due date
   ngOnInit(): void 
   {
-    this.components.sleep(1).then(() => this.task = this.components.getTaskInfo())
+    this.components.sleep(1).then(() => {this.task = this.components.getTaskInfo(); console.log(this.task)})
 
   }
 
@@ -43,7 +43,7 @@ export class TaskEditorComponent implements OnInit {
 
   }
 
-  saveTask(title: string, description: string, created: string, priority: string, due: string,)
+  saveTask(title: string, description: string, created: string, priority: string, due: string)
   {
     if (due === '') {due = 'Not due'}
     this.newTask = 
@@ -70,11 +70,15 @@ export class TaskEditorComponent implements OnInit {
   // completing the task
   completeTask()
   {
+    // if the inbox is me, then save it to as inbox "me" otherwise to any other inbox
     if (this.task.inbox === 'me')
     {
       // remove the task from array
       let splicedTask = this.workspace.db.me.sections[this.task.index].tasks.splice(this.task.taskIndex, 1)
       this.workspace.db.completed.tasks.push(splicedTask[0]) // pass the task into completed array
+      splicedTask[0].inbox = 'me'
+      splicedTask[0].completed = new Date().toDateString()
+      splicedTask[0].sectionIndex = this.task.index
       this.database.update(this.workspace.db) // update db
 
     }
@@ -88,6 +92,24 @@ export class TaskEditorComponent implements OnInit {
     this.database.update(this.workspace.db)
     // this.component save to deleted db array
     this.components.taskEditor = false
+
+  }
+
+  // if the task was already completed, uncomplete it and add it back from where it came from
+  uncompleteTask()
+  {
+    // remove the task from completed db
+    let splicedTask = this.workspace.db.completed.tasks.splice(this.task.taskIndex, 1)
+    // check if the inbox is "me" and add it back to there
+    if (this.task.inbox === 'me')
+    {
+      // push it back to the section from where it originally came from
+      // # add a check to see if the section still exists, if not add to first/last section
+      // if no section exists do nothing
+      this.workspace.db.me.sections[splicedTask[0].sectionIndex].tasks.push(splicedTask[0])
+      this.database.update(this.workspace.db)
+
+    }
 
   }
 

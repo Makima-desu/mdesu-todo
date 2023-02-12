@@ -9,6 +9,12 @@ import { LoadWorkspaceService } from 'src/app/services/Load Workspace/load-works
 })
 export class CompletedComponent implements OnInit {
 
+  completedtasks: any
+  noPriorityTasks: any[] = []
+  LowPriorityTasks: any[] = []
+  MediumPriorityTasks: any[] = []
+  HighPriorityTasks: any[] = []
+
   constructor(public workspace: LoadWorkspaceService, public components: EnablingComponentsService, private database: DatabaseService, private element: ElementRef) 
   {
 
@@ -16,7 +22,9 @@ export class CompletedComponent implements OnInit {
 
   date: any = new Date()
 
-  ngOnInit(): void {
+  ngOnInit(): void 
+  {
+  
   }
 
 }

@@ -68,6 +68,8 @@ export interface Workspace
             description?: string // description of task
             created?: string // when task was created
             priority?: string // what priority is that task
+            sectionIndex?: number // to track which section it came from
+            inbox?: string // to know from which inbox it came from
             completed?: string // date of completion
 
         }]
