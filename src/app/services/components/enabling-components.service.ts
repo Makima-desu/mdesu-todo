@@ -45,6 +45,7 @@ export class EnablingComponentsService {
   taskClicked: boolean = false
 
   index: number = -1
+  inbox: string = ''
 
   addInbox: boolean = false // adding an inbox to sidebar
   
@@ -93,7 +94,7 @@ export class EnablingComponentsService {
   }
 
   // function to check if add task button was clicked
-  addTaskFunc(element: any, index: number)
+  addTaskFunc(element: any, index: number, inbox: string)
   {
     // if yes
     if (element)
@@ -101,6 +102,7 @@ export class EnablingComponentsService {
       this.addTaskClicked = true // change the click to true
       this.addTask = true // show the menu
       this.index = index
+      this.inbox = inbox
       this.sleep(100).then(() => this.addTaskClicked = false)
       // sleep here is neccessary because the only way to check if the click
       // happend outside is to check the entire document

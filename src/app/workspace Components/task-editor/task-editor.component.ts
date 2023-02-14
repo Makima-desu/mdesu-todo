@@ -1,5 +1,6 @@
 import { Component, OnInit, HostListener, ElementRef, QueryList, ViewChild, Query} from '@angular/core';
 import { DatabaseService } from 'src/app/db/database.service';
+import { ActivatedRoute } from '@angular/router';
 import { EnablingComponentsService } from 'src/app/services/components/enabling-components.service';
 import { LoadWorkspaceService } from 'src/app/services/Load Workspace/load-workspace.service';
 
@@ -9,7 +10,7 @@ import { LoadWorkspaceService } from 'src/app/services/Load Workspace/load-works
 })
 export class TaskEditorComponent implements OnInit {
 
-  constructor(public components: EnablingComponentsService, private element: ElementRef, public workspace: LoadWorkspaceService, private database: DatabaseService) { }
+  constructor(private router: ActivatedRoute, public components: EnablingComponentsService, private element: ElementRef, public workspace: LoadWorkspaceService, private database: DatabaseService) { }
 
   //@ts-ignore
   @ViewChild('editor') editor: QueryList<ElementRef>
@@ -18,9 +19,19 @@ export class TaskEditorComponent implements OnInit {
 
   priorityMenu: boolean = false // choosing the priority of the task
   datePickerMenu: boolean = false // choosing the due date
+
+  routeParameters: any[] = []
+
   ngOnInit(): void 
   {
     this.components.sleep(1).then(() => {this.task = this.components.getTaskInfo(); console.log(this.task)})
+
+    this.router.queryParams.subscribe(item =>
+      {
+        // @ts-ignore
+        this.routeParameters = item
+
+      })
 
   }
 
@@ -55,8 +66,17 @@ export class TaskEditorComponent implements OnInit {
       due: due,
 
     }
+    if (this.task.inbox === 'me')
+    {
+      this.workspace.db.me.sections[this.task.index].tasks[this.task.taskIndex] = this.newTask
+
+    }
+    else 
+    {
+      this.workspace.db.sidebar.categories[this.routeParameters[1]].inbox[this.routeParameters[2]].sections[this.task.index].tasks[this.task.taskIndex] = this.newTask
+
+    }
     this.components.taskEditor = false
-    this.workspace.db.me.sections[this.task.index].tasks[this.task.taskIndex] = this.newTask
     this.database.update(this.workspace.db)
 
   }
@@ -70,46 +90,91 @@ export class TaskEditorComponent implements OnInit {
   // completing the task
   completeTask()
   {
+    let splicedTask
     // if the inbox is me, then save it to as inbox "me" otherwise to any other inbox
     if (this.task.inbox === 'me')
     {
       // remove the task from array
-      let splicedTask = this.workspace.db.me.sections[this.task.index].tasks.splice(this.task.taskIndex, 1)
+      splicedTask = this.workspace.db.me.sections[this.task.index].tasks.splice(this.task.taskIndex, 1)
       this.workspace.db.completed.tasks.push(splicedTask[0]) // pass the task into completed array
       splicedTask[0].inbox = 'me'
       splicedTask[0].completed = new Date().toDateString()
       splicedTask[0].sectionIndex = this.task.index
-      this.database.update(this.workspace.db) // update db
 
     }
+    else
+    {
+      // remove the task from array
+      splicedTask = this.workspace.db.sidebar.categories[this.routeParameters[1]].inbox[this.routeParameters[2]].sections[this.task.index].tasks.splice(this.task.taskIndex, 1)
+      this.workspace.db.completed.tasks.push(splicedTask[0]) // pass the task into completed array
+      splicedTask[0].inbox = this.routeParameters[0]
+      splicedTask[0].categoryIndex = this.routeParameters[1]
+      splicedTask[0].inboxIndex = this.routeParameters[2]
+      splicedTask[0].completed = new Date().toDateString()
+      splicedTask[0].sectionIndex = this.task.index
+
+    }
+
+    this.components.taskEditor = false
+    this.database.update(this.workspace.db) // update db
 
   }
 
   // deleting the task
   deleteTask()
   {
-    this.workspace.db.me.sections[this.task.index].tasks.splice(this.task.taskIndex, 1)
-    this.database.update(this.workspace.db)
-    // this.component save to deleted db array
-    this.components.taskEditor = false
+    let splicedTask
 
+    if (this.task.inbox === 'me')
+    {
+      // remove the task from array
+      splicedTask = this.workspace.db.me.sections[this.task.index].tasks.splice(this.task.taskIndex, 1)
+      this.workspace.db.deleted.tasks.push(splicedTask[0]) // pass the task into completed array
+      splicedTask[0].inbox = 'me'
+      splicedTask[0].completed = new Date().toDateString()
+      splicedTask[0].sectionIndex = this.task.index
+      
+    }
+    else
+    {
+      // remove the task from array
+      splicedTask = this.workspace.db.sidebar.categories[this.routeParameters[1]].inbox[this.routeParameters[2]].sections[this.task.index].tasks.splice(this.task.taskIndex, 1)
+      this.workspace.db.deleted.tasks.push(splicedTask[0]) // pass the task into completed array
+      splicedTask[0].inbox = this.routeParameters[0]
+      splicedTask[0].completed = new Date().toDateString()
+      splicedTask[0].sectionIndex = this.task.index
+
+    }
+    
+    this.components.taskEditor = false
+    this.database.update(this.workspace.db) // update db
   }
 
   // if the task was already completed, uncomplete it and add it back from where it came from
   uncompleteTask()
   {
-    // remove the task from completed db
-    let splicedTask = this.workspace.db.completed.tasks.splice(this.task.taskIndex, 1)
+    let splicedTask
+
+    if (this.task.section === 'Completed') {splicedTask = this.workspace.db.completed.tasks.splice(this.task.taskIndex, 1)}
+    else if (this.task.section === 'Deleted') {splicedTask = this.workspace.db.deleted.tasks.splice(this.task.taskIndex, 1)}
+
+
+
     // check if the inbox is "me" and add it back to there
     if (this.task.inbox === 'me')
     {
-      // push it back to the section from where it originally came from
-      // # add a check to see if the section still exists, if not add to first/last section
-      // if no section exists do nothing
       this.workspace.db.me.sections[splicedTask[0].sectionIndex].tasks.push(splicedTask[0])
-      this.database.update(this.workspace.db)
+      
+    }
+    else
+    {
+      this.workspace.db.sidebar.categories[splicedTask[0].categoryIndex].inbox[splicedTask[0].inboxIndex].sections[splicedTask[0].sectionIndex].tasks.push(splicedTask[0])
+      // this.workspace.db.sidebar.categories[this.routeParameters[1]].inbox[this.routeParameters[2]].sections[splicedTask[0].sectionIndex].tasks.push(splicedTask[0])
 
     }
+
+    this.components.taskEditor = false
+    this.database.update(this.workspace.db)
 
   }
 

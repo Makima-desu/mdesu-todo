@@ -1,1 +1,132 @@
-<p>deleted works!</p>
+<div class="flex flex-col pt-4 px-4 text-white w-full h-full">
+    <div class="select-none flex w-full justify-start top-4 items-center border-b border-[#363636]">
+        <h1 class="text-lg">Deleted 
+            <span class="text-[12px] text-[#eee]/50">
+                {{date | date: 'EEEE, MMM d YYYY'}}
+            </span>
+            <span class="text-[12px] text-[#eee]/50 flex justify-center">
+                {{date | date: 'hh:mm:ss a'}}
+            </span>
+        </h1>
+        <!-- adding task to the current inbox i.e if its today, it adds to today -->
+    </div>
+    <!-- Page content -->
+    <div #page class="w-full flex px-8 pt-8 h-full relative overflow-x-auto overflow-y-hidden scrollbar-thin scrollbar-thumb-[#eee]/50 scrollbar-track-[#383838]/50 scrollbar-thumb-rounded scrollbar-track-rounded">
+        <div class="absolute flex h-[90%] gap-10">
+            <div class="w-72 flex group h-full rounded-lg select-none">
+                <div [ngClass]="{'border-opacity-0': tasks.scrollTop === 0}" class="flex flex-col border-b-2 gap-2 border-[#484848] pb-2">
+                    <div class="flex gap-2">
+                        <!-- <span class="text-[14px] text-[#eee]/40">{{workspace.db.me.sections[index].tasks.length}}</span> -->
+                        <span class="text-[16px] text-[#eee]/80 w-full pl-2 bg-transparent h-fit resize-none overflow-hidden">No Priority Tasks</span>
+                    </div>
+                    <div #tasks [ngClass]="{'border-opacity-0': (tasks.offsetHeight + tasks.scrollTop) >= tasks.scrollHeight}" class="overflow-y-auto h-full gap-4 flex flex-col pr-3 border-b-2 border-[#484848] scrollbar-thin group-hover:scrollbar-thumb-[#eee]/50 group-hover:scrollbar-track-[#383838]/50 scrollbar-thumb-rounded scrollbar-track-rounded pl-2">
+                        <ng-container *ngFor="let deletedTask of workspace.db.deleted.tasks; let index = index">
+                            <div #task (click)="components.loadTaskInfo(deletedTask.title, deletedTask.description, deletedTask.priority, deletedTask.created, deletedTask.due, 'Deleted', deletedTask.sectionIndex, index, deletedTask.inbox); components.addTaskEditor(task)" *ngIf="deletedTask.priority === 'None'" class="w-72">
+                                <div class="flex-col w-full overflow-hidden border-[#3d3d3d] hover:border-[#686868] border flex gap-2 select-none cursor-pointer transition-all duration-200 bg-[#242424] p-2 shadow-lg rounded-md">
+                                    <span class="text-[14px] text-[#eee]/70 overflow-hidden">{{deletedTask.title | truncate: 34}}</span>
+                                    <span class="text-[12px] text-[#eee]/40">{{deletedTask.description}}</span>
+                                    <div class="flex justify-center gap-2">
+                                        <span [ngClass]="{'text-green-300': deletedTask.priority === 'Low', 'text-orange-300': deletedTask.priority === 'Medium', 'text-red-600': deletedTask.priority === 'High'}" class="text-[12px] text-[#eee]/50">{{deletedTask.priority}}</span>
+                                        <span class="text-[12px] text-[#eee]/50">{{deletedTask.due}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </ng-container>
+                    </div>
+                </div>
+            </div>
+
+            <div class="w-72 flex group h-full rounded-lg select-none">
+                <div [ngClass]="{'border-opacity-0': tasks.scrollTop === 0}" class="flex flex-col border-b-2 gap-2 border-[#484848] pb-2">
+                    <div class="flex gap-2">
+                        <!-- <span class="text-[14px] text-[#eee]/40">{{workspace.db.me.sections[index].tasks.length}}</span> -->
+                        <span class="text-[16px] text-[#eee]/80 w-full pl-2 bg-transparent h-fit resize-none overflow-hidden">Low Priority Tasks</span>
+                    </div>
+                    <div #tasks [ngClass]="{'border-opacity-0': (tasks.offsetHeight + tasks.scrollTop) >= tasks.scrollHeight}" class="overflow-y-auto h-full gap-4 flex flex-col pr-3 border-b-2 border-[#484848] scrollbar-thin group-hover:scrollbar-thumb-[#eee]/50 group-hover:scrollbar-track-[#383838]/50 scrollbar-thumb-rounded scrollbar-track-rounded pl-2">
+                        <ng-container *ngFor="let deletedTask of workspace.db.deleted.tasks; let index = index">
+                            <div #task (click)="components.loadTaskInfo(deletedTask.title, deletedTask.description, deletedTask.priority, deletedTask.created, deletedTask.due, 'Deleted', index, index, deletedTask.inbox); components.addTaskEditor(task)" *ngIf="deletedTask.priority === 'Low'" class="w-72">
+                                <div class="flex-col w-full overflow-hidden border-green-300/50 hover:border-green-300 border flex gap-2 select-none cursor-pointer transition-all duration-200 bg-[#242424] p-2 shadow-lg rounded-md">
+                                    <span class="text-[14px] text-[#eee]/70 overflow-hidden">{{deletedTask.title | truncate: 34}}</span>
+                                    <span class="text-[12px] text-[#eee]/40">{{deletedTask.description}}</span>
+                                    <div class="flex justify-center gap-2">
+                                        <span [ngClass]="{'text-green-300': deletedTask.priority === 'Low', 'text-orange-300': deletedTask.priority === 'Medium', 'text-red-600': deletedTask.priority === 'High'}" class="text-[12px] text-[#eee]/50">{{deletedTask.priority}}</span>
+                                        <span class="text-[12px] text-[#eee]/50">{{deletedTask.due}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </ng-container>
+                    </div>
+                </div>
+            </div>
+
+            <div class="w-72 flex group h-full rounded-lg select-none">
+                <div [ngClass]="{'border-opacity-0': tasks.scrollTop === 0}" class="flex flex-col border-b-2 gap-2 border-[#484848] pb-2">
+                    <div class="flex gap-2">
+                        <!-- <span class="text-[14px] text-[#eee]/40">{{workspace.db.me.sections[index].tasks.length}}</span> -->
+                        <span class="text-[16px] text-[#eee]/80 w-full pl-2 bg-transparent h-fit resize-none overflow-hidden">Medium Priority Tasks</span>
+                    </div>
+                    <div #tasks [ngClass]="{'border-opacity-0': (tasks.offsetHeight + tasks.scrollTop) >= tasks.scrollHeight}" class="overflow-y-auto h-full gap-4 flex flex-col pr-3 border-b-2 border-[#484848] scrollbar-thin group-hover:scrollbar-thumb-[#eee]/50 group-hover:scrollbar-track-[#383838]/50 scrollbar-thumb-rounded scrollbar-track-rounded pl-2">
+                        <ng-container *ngFor="let deletedTask of workspace.db.deleted.tasks; let index = index">
+                            <div #task (click)="components.loadTaskInfo(deletedTask.title, deletedTask.description, deletedTask.priority, deletedTask.created, deletedTask.due, 'Deleted', index, index, deletedTask.inbox); components.addTaskEditor(task)" *ngIf="deletedTask.priority === 'Medium'" class="w-72">
+                                <div class="flex-col w-full overflow-hidden border-orange-300/40 hover:border-orange-300 border flex gap-2 select-none cursor-pointer transition-all duration-200 bg-[#242424] p-2 shadow-lg rounded-md">
+                                    <span class="text-[14px] text-[#eee]/70 overflow-hidden">{{deletedTask.title | truncate: 34}}</span>
+                                    <span class="text-[12px] text-[#eee]/40">{{deletedTask.description}}</span>
+                                    <div class="flex justify-center gap-2">
+                                        <span [ngClass]="{'text-green-300': deletedTask.priority === 'Low', 'text-orange-300': deletedTask.priority === 'Medium', 'text-red-600': deletedTask.priority === 'High'}" class="text-[12px] text-[#eee]/50">{{deletedTask.priority}}</span>
+                                        <span class="text-[12px] text-[#eee]/50">{{deletedTask.due}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </ng-container>
+                    </div>
+                </div>
+            </div>
+
+            <div class="w-72 flex group h-full rounded-lg select-none">
+                <div [ngClass]="{'border-opacity-0': tasks.scrollTop === 0}" class="flex flex-col border-b-2 gap-2 border-[#484848] pb-2">
+                    <div class="flex gap-2">
+                        <!-- <span class="text-[14px] text-[#eee]/40">{{workspace.db.me.sections[index].tasks.length}}</span> -->
+                        <span class="text-[16px] text-[#eee]/80 w-full pl-2 bg-transparent h-fit resize-none overflow-hidden">High Priority Tasks</span>
+                    </div>
+                    <div #tasks [ngClass]="{'border-opacity-0': (tasks.offsetHeight + tasks.scrollTop) >= tasks.scrollHeight}" class="overflow-y-auto h-full gap-4 flex flex-col pr-3 border-b-2 border-[#484848] scrollbar-thin group-hover:scrollbar-thumb-[#eee]/50 group-hover:scrollbar-track-[#383838]/50 scrollbar-thumb-rounded scrollbar-track-rounded pl-2">
+                        <ng-container *ngFor="let deletedTask of workspace.db.deleted.tasks; let index = index">
+                            <div #task (click)="components.loadTaskInfo(deletedTask.title, deletedTask.description, deletedTask.priority, deletedTask.created, deletedTask.due, 'Deleted', index, index, deletedTask.inbox); components.addTaskEditor(task)" *ngIf="deletedTask.priority === 'High'" class="w-72">
+                                <div class="flex-col w-full overflow-hidden border-red-500/50 hover:border-red-500 border flex gap-2 select-none cursor-pointer transition-all duration-200 bg-[#242424] p-2 shadow-lg rounded-md">
+                                    <span class="text-[14px] text-[#eee]/70 overflow-hidden">{{deletedTask.title | truncate: 34}}</span>
+                                    <span class="text-[12px] text-[#eee]/40">{{deletedTask.description}}</span>
+                                    <div class="flex justify-center gap-2">
+                                        <span [ngClass]="{'text-green-300': deletedTask.priority === 'Low', 'text-orange-300': deletedTask.priority === 'Medium', 'text-red-600': deletedTask.priority === 'High'}" class="text-[12px] text-[#eee]/50">{{deletedTask.priority}}</span>
+                                        <span class="text-[12px] text-[#eee]/50">{{deletedTask.due}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </ng-container>
+                    </div>
+                </div>
+            </div>
+
+            <div class="w-72 flex group h-full rounded-lg select-none">
+                <div [ngClass]="{'border-opacity-0': tasks.scrollTop === 0}" class="flex flex-col border-b-2 gap-2 border-[#484848] pb-2">
+                    <div class="flex gap-2">
+                        <!-- <span class="text-[14px] text-[#eee]/40">{{workspace.db.me.sections[index].tasks.length}}</span> -->
+                        <span class="text-[16px] text-[#eee]/80 w-full pl-2 bg-transparent h-fit resize-none overflow-hidden">All Tasks</span>
+                    </div>
+                    <div #tasks [ngClass]="{'border-opacity-0': (tasks.offsetHeight + tasks.scrollTop) >= tasks.scrollHeight}" class="overflow-y-auto h-full gap-4 flex flex-col pr-3 border-b-2 border-[#484848] scrollbar-thin group-hover:scrollbar-thumb-[#eee]/50 group-hover:scrollbar-track-[#383838]/50 scrollbar-thumb-rounded scrollbar-track-rounded pl-2">
+                        <ng-container *ngFor="let deletedTask of workspace.db.deleted.tasks; let index = index">
+                            <div #task (click)="components.loadTaskInfo(deletedTask.title, deletedTask.description, deletedTask.priority, deletedTask.created, deletedTask.due, 'Completed', index, index, deletedTask.inbox); components.addTaskEditor(task)" class="w-72">
+                                <div [ngClass]="{'border-green-300/50 hover:border-green-300': deletedTask.priority === 'Low', 'border-orange-300/40 hover:border-orange-300': deletedTask.priority === 'Medium', 'border-red-500/50 hover:border-red-500': deletedTask.priority === 'High', 'border-[#3d3d3d] hover:border-[#686868]': deletedTask.priority === 'None'}" class="flex-col w-full overflow-hidden border flex gap-2 select-none cursor-pointer transition-all duration-200 bg-[#242424] p-2 shadow-lg rounded-md">
+                                    <span class="text-[14px] text-[#eee]/70 overflow-hidden">{{deletedTask.title | truncate: 34}}</span>
+                                    <span class="text-[12px] text-[#eee]/40">{{deletedTask.description}}</span>
+                                    <div class="flex justify-center gap-2">
+                                        <span [ngClass]="{'text-green-300': deletedTask.priority === 'Low', 'text-orange-300': deletedTask.priority === 'Medium', 'text-red-600': deletedTask.priority === 'High'}" class="text-[12px] text-[#eee]/50">{{deletedTask.priority}}</span>
+                                        <span class="text-[12px] text-[#eee]/50">{{deletedTask.due}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </ng-container>
+                    </div>
+                </div>
+            </div>
+        </div>   
+    </div> 
+</div>         

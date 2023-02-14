@@ -71,6 +71,8 @@ export interface Workspace
             sectionIndex?: number // to track which section it came from
             inbox?: string // to know from which inbox it came from
             completed?: string // date of completion
+            categoryIndex?: number
+            inboxIndex?: number
 
         }]
 
@@ -83,7 +85,12 @@ export interface Workspace
             description?: string // description of task
             created?: string // when task was created
             priority?: string // what priority is that task
-            deletedDate?: string
+            sectionIndex?: number // to track which section it came from
+            inbox?: string // to know from which inbox it came from
+            completed?: string // date of completion
+            categoryIndex?: number
+            inboxIndex?: number
+            
         }]
 
     }

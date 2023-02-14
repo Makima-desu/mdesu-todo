@@ -42,3 +42,6 @@ export class LandingComponent implements OnInit {
   }
 
 }
+
+// #NOTE, add a note/warning saying: If nothing works i.e nothing is clickable hoverable or any of the sort
+// simply refresh the page, and it shoul fix itself

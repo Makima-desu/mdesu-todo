@@ -1,5 +1,6 @@
 import { Component, OnInit, HostListener, ElementRef, ViewChild, ViewRef, ViewChildren, QueryList } from '@angular/core';
 import { DatabaseService } from 'src/app/db/database.service';
+import { ActivatedRoute } from '@angular/router';
 import { EnablingComponentsService } from 'src/app/services/components/enabling-components.service';
 import { LoadWorkspaceService } from 'src/app/services/Load Workspace/load-workspace.service';
 
@@ -9,7 +10,7 @@ import { LoadWorkspaceService } from 'src/app/services/Load Workspace/load-works
 })
 export class AddTaskComponent implements OnInit {
 
-  constructor(private element: ElementRef, public components: EnablingComponentsService, private workspace: LoadWorkspaceService, private dbService: DatabaseService) { }
+  constructor(private router: ActivatedRoute, private element: ElementRef, public components: EnablingComponentsService, private workspace: LoadWorkspaceService, private dbService: DatabaseService) { }
 
   selectedPriority: string = '' // variable for which priority is currently selected, low medium high
   priorityMenu: boolean = false // priority menu bool
@@ -27,9 +28,17 @@ export class AddTaskComponent implements OnInit {
   //@ts-ignore
   @ViewChild('datePickerButton') datePickerButton: QueryList<ElementRef>
 
+  routeParameters: any[] = []
+
   ngOnInit(): void 
   {
     this.selectedPriority = 'None' // reset priority on taskinit
+    this.router.queryParams.subscribe(item =>
+      {
+        // @ts-ignore
+        this.routeParameters = item
+
+      })
   }
 
   @HostListener('document:click', ['$event', '$event.target'])
@@ -72,16 +81,35 @@ export class AddTaskComponent implements OnInit {
   {
     if (priority === '') {priority = 'None'}
     if (due === '') {due = 'Not due'}
-    this.workspace.db.me.sections[this.components.index].tasks.push
-    ({
-      title: title, // task name
-      description: description, // task description
-      priority: priority, // task priority
-      created: new Date().toDateString(),
-      // maybe date in miliseconds for comparison
-      due: due,
 
-    })
+    if (this.components.inbox === 'me')
+    {
+      this.workspace.db.me.sections[this.components.index].tasks.push
+      ({
+        title: title, // task name
+        description: description, // task description
+        priority: priority, // task priority
+        created: new Date().toDateString(),
+        // maybe date in miliseconds for comparison
+        due: due,
+  
+      })
+
+    }
+    else 
+    {
+      this.workspace.db.sidebar.categories[this.routeParameters[1]].inbox[this.routeParameters[2]].sections[this.components.index].tasks.push
+      ({
+        title: title, // task name
+        description: description, // task description
+        priority: priority, // task priority
+        created: new Date().toDateString(),
+        // maybe date in miliseconds for comparison
+        due: due,
+  
+      })
+    }
+
     this.dbService.update(this.workspace.db) // update the database
     this.components.addTask = false
 

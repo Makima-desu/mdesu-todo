@@ -18,7 +18,7 @@
                     <span [ngClass]="{'outline p-1': sectionTitleIndex === index}" *ngIf="sectionTitleIndex !== index" class="text-[16px] text-[#eee]/80 w-full bg-transparent h-fit resize-none overflow-hidden">{{me.title | truncate: 19}}</span>
                     <input #sectionTitle [value]="me.title" spellcheck="false" class="bg-transparent pl-1 rounded outline outline-1 focus:outline-white/40 outline-white/50 w-full text-[16px] text-[#eee]/80" *ngIf="sectionTitleIndex === index">
                     <!-- Add task to section -->
-                    <svg #addTask (click)="components.addTaskFunc(addTask, index)" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-8 cursor-pointer transition-all duration-200 hover:bg-[#eee]/30 rounded">
+                    <svg #addTask (click)="components.addTaskFunc(addTask, index, 'me')" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-8 cursor-pointer transition-all duration-200 hover:bg-[#eee]/30 rounded">
                         <path d="M10.75 4.75a.75.75 0 00-1.5 0v4.5h-4.5a.75.75 0 000 1.5h4.5v4.5a.75.75 0 001.5 0v-4.5h4.5a.75.75 0 000-1.5h-4.5v-4.5z" />
                     </svg>
                     <!-- shift index left -->

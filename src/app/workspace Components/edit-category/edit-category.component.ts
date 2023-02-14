@@ -1,4 +1,5 @@
 import { Component, OnInit, HostListener, ViewChild, QueryList, ViewChildren, Query, ElementRef } from '@angular/core';
+import { Router } from '@angular/router';
 import { DatabaseService } from 'src/app/db/database.service';
 import { EnablingComponentsService } from 'src/app/services/components/enabling-components.service';
 import { LoadWorkspaceService } from 'src/app/services/Load Workspace/load-workspace.service';
@@ -14,7 +15,7 @@ export class EditCategoryComponent implements OnInit {
   // @ts-ignore
   @ViewChildren('inboxTitle') inboxTitle: QueryList<ElementRef>
 
-  constructor(public components: EnablingComponentsService, public workspace: LoadWorkspaceService, private database: DatabaseService) 
+  constructor(public components: EnablingComponentsService, public workspace: LoadWorkspaceService, private database: DatabaseService, private router: Router) 
   {
     this.components.sleep(1).then(() =>
     {
@@ -27,7 +28,7 @@ export class EditCategoryComponent implements OnInit {
 
   ngOnInit(): void
   {
-    
+
   }
 
   // @ts-ignore
@@ -49,6 +50,18 @@ export class EditCategoryComponent implements OnInit {
   saveInboxTitle(title: string, index: number)
   {
     this.workspace.db.sidebar.categories[this.categoryInfo.index].inbox[index].title = title
+
+    // @ts-ignore
+    // check to see if the user is currently in that url
+    if (this.router.currentUrlTree.queryParams[0] !== title)
+    {
+      // if yes, navigate to the new url and reload page to get router params
+      this.router.navigate(['/workspace/', title])
+      location.reload();
+
+    }
+
+    // update db
     this.database.update(this.workspace.db)
 
   }

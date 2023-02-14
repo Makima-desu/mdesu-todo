@@ -1,1 +1,90 @@
-<p>inbox works!</p>
+<div class="flex flex-col pt-4 px-4 text-white w-full h-full">
+    <div class="select-none flex w-full top-4 items-center border-b border-[#363636] justify-between">
+        <h1 class="text-lg sm:w-max">{{routeParameters[0]}} <span class="text-[12px] text-[#eee]/50">{{date | date: 'EEEE, MMM d YYYY'}}</span><span class="text-[12px] text-[#eee]/50 flex sm:w-full sm:justify-center">{{date | date: 'hh:mm:ss a'}}</span></h1>
+        <!-- adding task to the current inbox i.e if its today, it adds to today -->
+        <button (click)="addSection()" class="select-none flex items-center text-[12px] drop-shadow p-1 rounded hover:bg-[#eee]/20 duration-200 transition-all">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6">
+                <path fillRule="evenodd" d="M12 5.25a.75.75 0 01.75.75v5.25H18a.75.75 0 010 1.5h-5.25V18a.75.75 0 01-1.5 0v-5.25H6a.75.75 0 010-1.5h5.25V6a.75.75 0 01.75-.75z" clipRule="evenodd" />
+            </svg>
+            Add Section <!-- add section instead of task-->
+        </button>
+    </div>
+    <!-- Page content -->
+    <div #page class="w-full flex px-8 pt-8 h-full relative overflow-x-auto overflow-y-hidden scrollbar-thin scrollbar-thumb-[#eee]/50 scrollbar-track-[#383838]/50 scrollbar-thumb-rounded scrollbar-track-rounded">
+        <div class="absolute flex gap-10 h-[90%]">
+            <div *ngFor="let section of workspace.db.sidebar.categories[routeParameters[1]].inbox[routeParameters[2]].sections; let index = index" class="relative w-72 group h-full rounded-lg select-none">
+                <div [ngClass]="{'border-opacity-0': tasks.scrollTop === 0}" class="flex items-center border-b-2 gap-2 border-[#484848] pb-2">
+                    <span class="text-[14px] text-[#eee]/40">{{section.tasks.length}}</span>
+                    <span [ngClass]="{'outline p-1': sectionTitleIndex === index}" *ngIf="sectionTitleIndex !== index" class="text-[16px] text-[#eee]/80 w-full bg-transparent h-fit resize-none overflow-hidden">{{section.title | truncate: 19}}</span>
+                    <input #sectionTitle [value]="section.title" spellcheck="false" class="bg-transparent pl-1 rounded outline outline-1 focus:outline-white/40 outline-white/50 w-full text-[16px] text-[#eee]/80" *ngIf="sectionTitleIndex === index">
+                    <!-- Add task to section -->
+                    <svg #addTask (click)="components.addTaskFunc(addTask, index, routeParameters[0])" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-8 cursor-pointer transition-all duration-200 hover:bg-[#eee]/30 rounded">
+                        <path d="M10.75 4.75a.75.75 0 00-1.5 0v4.5h-4.5a.75.75 0 000 1.5h4.5v4.5a.75.75 0 001.5 0v-4.5h4.5a.75.75 0 000-1.5h-4.5v-4.5z" />
+                    </svg>
+                    <!-- shift index left -->
+                    <svg (click)="shiftLeft(index)" *ngIf="index > 0; EditSectionTitle(index - 1)" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-8 cursor-pointer transition-all duration-200 hover:bg-[#eee]/30 rounded">
+                        <path fillRule="evenodd" d="M17 10a.75.75 0 01-.75.75H5.612l4.158 3.96a.75.75 0 11-1.04 1.08l-5.5-5.25a.75.75 0 010-1.08l5.5-5.25a.75.75 0 111.04 1.08L5.612 9.25H16.25A.75.75 0 0117 10z" clipRule="evenodd" />
+                    </svg>
+                    <!-- shift index right -->
+                    <svg (click)="shiftRight(index)" *ngIf="index !== this.workspace.db.sidebar.categories[this.routeParameters[1]].inbox[this.routeParameters[2]].sections.length - 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-8 cursor-pointer transition-all duration-200 hover:bg-[#eee]/30 rounded">
+                        <path fillRule="evenodd" d="M3 10a.75.75 0 01.75-.75h10.638L10.23 5.29a.75.75 0 111.04-1.08l5.5 5.25a.75.75 0 010 1.08l-5.5 5.25a.75.75 0 11-1.04-1.08l4.158-3.96H3.75A.75.75 0 013 10z" clipRule="evenodd" />
+                    </svg>
+                    <!-- section settings -->
+                    <svg *ngIf="sectionMenuOptions !== index" (click)="EditSectionTitle(index); sectionTitleIndex = -1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-8 cursor-pointer transition-all duration-200 hover:bg-[#eee]/30 rounded">
+                        <path d="M3 10a1.5 1.5 0 113 0 1.5 1.5 0 01-3 0zM8.5 10a1.5 1.5 0 113 0 1.5 1.5 0 01-3 0zM15.5 8.5a1.5 1.5 0 100 3 1.5 1.5 0 000-3z" />
+                    </svg>
+                </div>
+                <div *ngIf="sectionTitleIndex === index" class="pb-2 flex w-full justify-end gap-2 select-none">
+                    <button class="p-1 border border-[#484848]/50 px-2 text-[13px] hover:bg-[#eee]/30 bg-[#484848]/10 shadow transition-all duration-200 rounded" (click)="sectionTitleIndex = -1">Cancel</button>
+                    <button class="p-1 border border-[#484848]/50 px-2 text-[13px] hover:bg-[#eee]/30 bg-[#787878]/10 shadow transition-all duration-200 rounded" (click)="saveSectionTitle(index); sectionTitleIndex = -1">Save</button>
+                </div>
+                <div #sectionMenu *ngIf="sectionMenuOptions === index" (click)="sectionMenuOptions = -1" class="pb-2 flex w-full justify-end gap-2 select-none">
+                    <div class="flex flex-col text-[12.5px] border rounded border-[#434343] tracking-wide overflow-hidden absolute bg-[#303030] shadow w-full">
+                        <div class="border-b border-[#404040] p-1">
+                            <div (click)="this.sectionMenuOptions = -1" class="cursor-pointer rounded p-1.5 flex gap-2 items-center hover:bg-[#eee]/20 transition-all duration-200">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" class="w-5">
+                                    <path strokeLinecap="round" strokeLinejoin="round" d="M3 3v1.5M3 21v-6m0 0l2.77-.693a9 9 0 016.208.682l.108.054a9 9 0 006.086.71l3.114-.732a48.524 48.524 0 01-.005-10.499l-3.11.732a9 9 0 01-6.085-.711l-.108-.054a9 9 0 00-6.208-.682L3 4.5M3 15V4.5" />
+                                </svg>
+                                <span>Sort by priority (Low to High)</span>
+                            </div>
+                            <div (click)="this.sectionMenuOptions = -1" class="cursor-pointer rounded p-1.5 flex gap-2 items-center hover:bg-[#eee]/20 transition-all duration-200">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" class="w-5">
+                                    <path strokeLinecap="round" strokeLinejoin="round" d="M3 3v1.5M3 21v-6m0 0l2.77-.693a9 9 0 016.208.682l.108.054a9 9 0 006.086.71l3.114-.732a48.524 48.524 0 01-.005-10.499l-3.11.732a9 9 0 01-6.085-.711l-.108-.054a9 9 0 00-6.208-.682L3 4.5M3 15V4.5" />
+                                </svg>
+                                <span>Sort by priority (High to Low)</span>
+                            </div>
+                        </div>
+                        <div class="border-b border-[#404040] p-1">
+                            <div (click)="sectionTitleIndex = index" class="cursor-pointer rounded p-1.5 flex gap-2 items-center hover:bg-[#eee]/20 transition-all duration-100">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" class="w-5">
+                                    <path strokeLinecap="round" strokeLinejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125" />
+                                </svg>
+                                <span>Edit Title</span>
+                            </div>
+                        </div>
+                        <div class="p-1">
+                            <div (click)="deleteSection(index); this.sectionMenuOptions = -1" class="cursor-pointer rounded p-1.5 flex gap-2 items-center hover:bg-[#eee]/20 transition-all duration-200">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" class="w-5">
+                                    <path strokeLinecap="round" strokeLinejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+                                </svg>
+                                <span>Delete Section</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div #tasks [ngClass]="{'border-opacity-0': (tasks.offsetHeight + tasks.scrollTop) >= tasks.scrollHeight}" class="overflow-y-auto h-full gap-4 flex flex-col pr-3 border-b-2 border-[#484848] scrollbar-thin group-hover:scrollbar-thumb-[#eee]/50 group-hover:scrollbar-track-[#383838]/50 scrollbar-thumb-rounded scrollbar-track-rounded pl-2">
+                    <div #task [ngClass]="{'border-green-300/50 hover:border-green-300': task.priority === 'Low', 'border-orange-300/40 hover:border-orange-300': task.priority === 'Medium', 'border-red-500/50 hover:border-red-500': task.priority === 'High', 'border-[#3d3d3d] hover:border-[#686868]': task.priority === 'None'}" (click)="components.loadTaskInfo(task.title, task.description, task.priority, task.created, task.due, section.title, index, taskIndex, routeParameters[0]); components.addTaskEditor(task)" *ngFor="let task of section.tasks; let taskIndex = index" class="flex gap-2 select-none cursor-pointer transition-all duration-200 bg-[#242424] p-2 shadow-lg rounded-md border">
+                        <div class="flex flex-col gap-1 w-full overflow-hidden">
+                            <span class="text-[14px] text-[#eee]/70 overflow-hidden">{{task.title | truncate: 34}}</span>
+                            <span class="text-[12px] text-[#eee]/40">{{task.description}}</span>
+                            <div class="flex justify-center gap-2">
+                                <span [ngClass]="{'text-green-300': task.priority === 'Low', 'text-orange-300': task.priority === 'Medium', 'text-red-600': task.priority === 'High'}" class="text-[12px] text-[#eee]/50">{{task.priority}}</span>
+                                <span class="text-[12px] text-[#eee]/50">{{task.due}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
