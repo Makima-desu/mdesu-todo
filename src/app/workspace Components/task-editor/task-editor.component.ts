@@ -24,7 +24,7 @@ export class TaskEditorComponent implements OnInit {
 
   ngOnInit(): void 
   {
-    this.components.sleep(1).then(() => {this.task = this.components.getTaskInfo(); console.log(this.task)})
+    this.components.sleep(1).then(() => {this.task = this.components.getTaskInfo();})
 
     this.router.queryParams.subscribe(item =>
       {
