@@ -62,10 +62,10 @@ export class DatabaseService
           routines: true,
           tasks:
           [{
-            title: 'Create Your Routine!',
-            description: 'Setting routines can help remembering tasks which are not as important as the other.',
+            title: 'Important Note!!!!! Read if nothing works!!!',
+            description: 'If upon first loading into workspace, nothing works. Just refresh the page, and it will never happen again.',
             created: new Date().toDateString(),
-            priority: 'Low',
+            priority: 'High',
             due: 'Not Due'
 
           }],
